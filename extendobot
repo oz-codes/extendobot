@@ -1,0 +1,8 @@
+#!/usr/bin/ruby1.9.1
+
+require 'cinch'
+require_relative './classes/Util'
+
+utils = Util::Util.instance;
+bot = Util::Bot.instance;
+bot.start

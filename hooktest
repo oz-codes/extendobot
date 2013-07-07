@@ -1,0 +1,47 @@
+#!/usr/bin/ruby1.9.1
+require 'cinch'
+
+module RandHook
+		  include Cinch::Plugin
+		  def self.generate_random_number(m)
+		    # Hooks are called in the same thread as the handler and thus
+		    # using thread local variables is possible.
+		    Thread.current[:rand] = Kernel.rand
+		  end
+		  def self.prehook(method)
+			hook :pre, method: method.to_sym
+		  end
+		  prehook("generate_random_number") 
+
+		  def self.cheer(m)
+		    m.reply "Yay, I successfully ran a command"
+		  end
+		  def initialize(*args)
+			  super
+			  self.hook :pre, method: :generate_random_number
+			  self.hook :post, method: :cheer
+		  end
+	end
+
+class HooksDemo 
+  include Cinch::Plugin
+  include RandHook
+
+  match "rand"
+  def execute(m)
+    m.reply "Random number: " + Thread.current[:rand].to_s
+  end
+end
+
+bot = Cinch::Bot.new do
+  configure do |c|
+    c.nick            = "cinch_hooks"
+    c.server          = "irc.freenode.org"
+    c.channels        = ["#dacleeze"]
+    c.verbose         = true
+    c.plugins.plugins = [HooksDemo]
+  end
+end
+
+
+bot.start

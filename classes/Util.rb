@@ -21,22 +21,84 @@ module Util
 		def getCollection(dbn,col) 
 			return @@mongo.db(dbn).collection(col)
 		end
-	end
-	class Bot
-		def self.instance
-			@@instance ||= new
+		def getServers()
+			servers = Array.new()
+			col = self.getCollection("chans","servers")
+			col.find.each { |row| 
+				servers.push(row)
+			}
+			return servers
 		end
+		def hton(host)
+			col = getCollection("chans","servers")
+			return col.find_one({ "host" => host })['name']
+		end
+		def MainLoop
+			Thread.list.each { |thr|
+				thr.join
+			}
+		end
+	end
+	class BotFamily
+		def self.instance
+                        @@instance ||= new
+                end
+                def initialize
+                        @@family = Hash.new
+			@@workers = Hash.new
+                end
+		def get(name)
+			return @@family[name]
+		end
+		def self.add(opts)
+			host = opts['host'] || nil;
+			name = opts['name'] || nil;
+			@@family[name] = Bot.new(host)
+		end
+		def add(opts)
+			host = opts['host'] || nil;
+			name = opts['name'] || nil;
+			@@family[name] = Bot.new(host)
+		end
+		def spawn(opts)
+			add(opts)
+			start(opts['name'])
+		end
+		def start(name)
+			@@workers[name] ||= Thread.new(@@family[name]) { |bot|
+				bot.start
+			}
+		end
+		def startAll() 
+			@@family.each { |k, v|
+				start(k)
+			}
+		end
+		def stop(name)
+			@@workers[name].kill
+			@@workers[name] = nil
+			@@family[name].stop
+		end
+		def stopAll()
+			@@workers.each { |k, v|
+				stop(k)
+			}
+		end
+				
+		end
+	class Bot
 		attr_accessor :bot
-		def initialize
+		def initialize(host) 
 			@bot = Cinch::Bot.new do
 			  configure do |c|
-			    c.server   = "irc.wtfux.org"
+			    c.server   = host
 			    mong       = Util.instance
 			    conf       = mong.getCollection("extendobot","config");
-			    nick       = conf.find_one({'key' => "nick"})
+			    name = Util.instance.hton(host)
+			    nick = conf.find_one({ 'key' => 'nick', 'server' => name })
 			    c.nick     = nick['val']
 			    chans      = mong.getCollection("chans","channels")
-			    cList      = chans.find({'autojoin' => true}).collect { |x| 
+			    cList      = chans.find({'autojoin' => true, 'server' => name}).collect { |x| 
 					x['channel']			
 			    }
 			    c.channels = cList
@@ -48,10 +110,26 @@ module Util
 			    c.plugins.plugins = pList;
 		  end
 		end
+
              end
 	     def start
 		@bot.start
-	    end
+	     end
+	     def stop
+		@bot.stop
+	     end
+	end
+	module PluginHelper
+		@@commands = Hash.new
+		@@levelRequired = 0
+		def commands
+			ret = Array.new	
+			@@commands.each { |k, v|
+				ret.push k
+			}
+			return ret
+		end
+				
 	end
 end
 

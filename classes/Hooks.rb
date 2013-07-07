@@ -3,7 +3,7 @@ require_relative 'Util.rb'
 module Hooks
         module AuthHook
                 include Cinch::Plugin
-                hook :pre, method: :is_authed
+                hook :pre, { method: :is_authed }
                 def is_authed(m)
                         user = m.user;
                         if m.authed?
@@ -17,17 +17,15 @@ module Hooks
         end
         module ACLHook
                 include Cinch::Plugin
-		@cmdname = ""
-		@levelRequired = ""
-		hook :pre, method: :aclcheck
+		@@levelRequired = 0
 		def aclcheck(m)
-			debug "performing aclcheck against #{m.user.name}"
-			user = m.user.name
+			user = m.user.nick
 			acl = Util::Util.instance.getDB("acl")
 			users = acl.collection("users")
-			res = users.find_one({'user' => user})
+			name = Util::Util.instance.hton(m.bot.config.server)
+			res = users.find_one({'user' => user, 'server' => name})
 			Thread.current[:result] = res
-			if res['level'] >= @levelRequired 
+			if res['level'].to_i >= @@levelRequired.to_i
 				Thread.current[:aclpass] = true
 				return true
 			else

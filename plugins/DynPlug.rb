@@ -4,15 +4,16 @@ require_relative '../classes/Util.rb'
 class DynPlug
 	include Cinch::Plugin
 	include Hooks::ACLHook
+	include Util::PluginHelper
 	set :prefix, /^:/
-	@commandName = "dynload"
-	@levelRequired = 10
+	@@commands["dynload"] = ":dynload <url> - dynamically load a plugin from url"
+	@@levelRequired = 10
 	match /dynload ([a-zA-Z][a-zA-Z0-9]+) (.+)/;
 	
 	def execute(m, modname, url) 
-		if(!Thread.current[:aclpass]) 
-			m.reply("#{m.user.name}: your access level is not high enough for this command.")
-			debug Thread.current.inspect
+		aclcheck(m)
+		if(!aclcheck(m)) 
+			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
 		end
 		if(File.exist?("/var/src/ruby/extendobot/plugins/#{modname}.rb")) 
@@ -28,7 +29,7 @@ class DynPlug
 			end
 		end
 		require "/var/src/ruby/extendobot/plugins/#{modname}.rb";
-		ibot = Util::Bot.instance
+		ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server))
 		ibot.bot.plugins.register_plugin(Object.const_get(modname))
 		m.reply("#{modname} added successfully")
 	end

@@ -2,8 +2,9 @@ require 'cinch'
 require_relative '../classes/Util.rb'
 class Helo
 	include Cinch::Plugin
+	include Util::PluginHelper
 	set :prefix, /^:/
-	extend Hooks::ACLHook
+	@@commands["helo"] = ":helo - say hi!"
 	match /helo/;
 	
 	def execute(m)

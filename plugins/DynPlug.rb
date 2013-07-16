@@ -6,7 +6,7 @@ class DynPlug
 	include Hooks::ACLHook
 	include Util::PluginHelper
 	set :prefix, /^:/
-	@@commands["dynload"] = ":dynload <url> - dynamically load a plugin from url"
+	@@commands["dynload"] = ":dynload <plugname> <url> - dynamically load a plugin from <url> using <plugname> as plugin name"
 	@@levelRequired = 10
 	match /dynload ([a-zA-Z][a-zA-Z0-9]+) (.+)/;
 	

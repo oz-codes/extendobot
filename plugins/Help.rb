@@ -3,6 +3,7 @@ require_relative '../classes/Util.rb'
 class Help
 	include Cinch::Plugin
 	include Util::PluginHelper
+	@clist = %w{help}
 	@@commands["help"] = ":help [<cmd>] - produce help for <cmd>"
 	set :prefix, /^:/
 	match /help( .+)?/, method: :gethelp

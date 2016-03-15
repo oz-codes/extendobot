@@ -4,6 +4,7 @@ class Helo
 	include Cinch::Plugin
 	include Util::PluginHelper
 	set :prefix, /^:/
+	@clist = %w{helo}
 	@@commands["helo"] = ":helo - say helo"
 	match /helo/;
 	

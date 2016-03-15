@@ -6,6 +6,7 @@ class DynPlug
 	include Hooks::ACLHook
 	include Util::PluginHelper
 	set :prefix, /^:/
+	@clist = %w{dynload reload unload load}
 	@@commands["dynload"] = ":dynload <plugname> <url> - dynamically load a plugin from <url> using <plugname> as plugin name"
 	@@commands["reload"] = ":reload <plugname> - reload plugin source"
 	@@commands["unload"] = ":unload <plugname> - unload plugin source"

@@ -4,6 +4,7 @@ class Say
         include Cinch::Plugin
 	include Util::PluginHelper
         set :prefix, /^:/
+	@clist = %w{say}
         @@commands["say"] = ":say :shyt - say :shyt bro!"
         extend Hooks::ACLHook
         match /say (.+)/;

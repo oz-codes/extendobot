@@ -3,10 +3,11 @@ require_relative '../classes/Util.rb'
 class PlugTool
 	include Cinch::Plugin
 	include Util::PluginHelper
+	@clist = %w{plugs commands}
 	@@commands["plugs"] = ":plugs - produce list of plugins available"
-	@@commands["commands"] = ":commands - produce list of commands"
+	@@commands["commands"] = ":commands <plugin> - produce commands for <plugin>, or list of all commands if no plugin is given"
 	set :prefix, /^:/
-	match /commands/, method: :pluginfo
+	match /commands( .+)?/, method: :pluginfo
 	match /plugs( .+)?/, method: :interstitial
 
 	def interstitial(m, filter = nil) 
@@ -48,8 +49,27 @@ class PlugTool
 		}
 		m.reply(msg)
 	end
-	def pluginfo(m)
-		cmds = self.class.class_eval { @@commands }
+	def pluginfo(m, modname = nil)
+		cmds = ""
+		if(modname != nil)
+			puts modname 
+			modname.strip!
+			if(File.exist?("/var/src/ruby/extendobot/plugins/#{modname}.rb")) 
+				
+				ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+				kc = Kernel.const_get(modname)
+				i = ibot.plugins.find_index { |x| x.class == kc }
+				if(i == nil) 
+					m.reply("#{modname} not loaded currently") 
+				else 
+					cmds = kc.class_eval { @clist }
+					
+				end
+			end
+		else  
+			puts "no MODULE"
+			cmds = self.class.class_eval { @@commands }
+		end
 		str = ""
 		cmds.each { |k, v|
 			str << "#{k} "

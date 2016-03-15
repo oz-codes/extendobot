@@ -7,11 +7,14 @@ class PlugTool
 	@@commands["commands"] = ":commands - produce list of commands"
 	set :prefix, /^:/
 	match /commands/, method: :pluginfo
-	match /plugs/, method: :interstitial
+	match /plugs( .+)?/, method: :interstitial
 
-	def interstitial(m, sub = nil) 
-		debug "in interstitial, for sub to #{sub.to_s}"
-		case sub
+	def interstitial(m, filter = nil) 
+		debug "in interstitial, for filter to #{filter.to_s}"
+		if(filter != nil) 
+			filter.strip!
+		end
+		case filter
 			when ".enabled"
 				plugs(m,:enabled)
 			when ".disabled"

@@ -6,20 +6,22 @@ module Util
 	class Util
 		require 'mongo';
 		include Mongo;
-		def self.instance
+		Mongo::Logger.logger.level = ::Logger::FATAL
+		def self.instance 
 			@@instance ||= new
 		end
 		def initialize	
-			@@mongo = MongoClient.new
-		end
-		def getConn
-			return @@mongo
+			@@url = "127.0.0.1:27017"
+			@@mongos = {};
+			@@mongos[:chans] = Mongo::Client.new([@@url], :database => "chans")
+			@@mongos[:extendobot] = Mongo::Client.new([@@url], :database => "extendobot")
+			@@mongos[:acl] = Mongo::Client.new([@@url], :database => "acl")
 		end
 		def getDB(dbn)
-			return @@mongo.db(dbn)
+			return @@mongos[dbn.to_sym]
 		end
 		def getCollection(dbn,col) 
-			return @@mongo.db(dbn).collection(col)
+			return self.getDB(dbn)[col.to_sym]
 		end
 		def getServers()
 			servers = Array.new()
@@ -31,7 +33,9 @@ module Util
 		end
 		def hton(host)
 			col = getCollection("chans","servers")
-			return col.find_one({ "host" => host })['name']
+			name = ""
+			name = col.find({ "host" => host }).limit(1).each 
+			return name.next_values()[0]["name"];	
 		end
 		def MainLoop
 			Thread.list.each { |thr|
@@ -92,11 +96,10 @@ module Util
 			@bot = Cinch::Bot.new do
 			  configure do |c|
 			    c.server   = host
-			    mong       = Util.instance
+			    mong       = Util.new
 			    conf       = mong.getCollection("extendobot","config");
-			    name = Util.instance.hton(host)
-			    nick = conf.find_one({ 'key' => 'nick', 'server' => name })
-			    c.nick     = nick['val']
+			    name = mong.hton(host)
+			    c.nick = conf.find({ 'key' => 'nick', 'server' => name }).each.next_values()[0]["val"] 
 			    chans      = mong.getCollection("chans","channels")
 			    cList      = chans.find({'autojoin' => true, 'server' => name}).collect { |x| 
 					x['channel']			
@@ -104,10 +107,13 @@ module Util
 			    c.channels = cList
 			    pList = Array.new
 			    Pathname.glob("/var/src/ruby/extendobot/plugins/*.rb").each { |plugin|
-				require plugin
+				puts "found plugin #{plugin}"
+					
+				load plugin
+				puts Object.const_get(File.basename(plugin.basename,File.extname(plugin)).to_s)
 				pList.push(Object.const_get(File.basename(plugin.basename,File.extname(plugin)).to_s))
 			    }
-			    c.plugins.plugins = pList;
+			    c.plugins.plugins = pList
 		  end
 		end
 

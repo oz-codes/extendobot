@@ -20,10 +20,9 @@ module Hooks
 		@@levelRequired = 0
 		def aclcheck(m)
 			user = m.user.nick
-			acl = Util::Util.instance.getDB("acl")
-			users = acl.collection("users")
+			users = Util::Util.instance.getCollection("acl","users")
 			name = Util::Util.instance.hton(m.bot.config.server)
-			res = users.find_one({'user' => user, 'server' => name})
+			res = users.find({'user' => user, 'server' => name}).each.next_values()[0]
 			Thread.current[:result] = res
 			if res['level'].to_i >= @@levelRequired.to_i
 				Thread.current[:aclpass] = true

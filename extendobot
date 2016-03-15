@@ -3,7 +3,7 @@
 require 'cinch'
 require_relative './classes/Util'
 
-utils = Util::Util.instance;
+utils = Util::Util.new;
 bots = Util::BotFamily.instance
 servers = utils.getServers()
 servers.each { |serv| 
@@ -14,8 +14,9 @@ servers.each { |serv|
 			}
 		) 
 		puts "autoconnect to #{serv['name']}"
+	else 
+		puts "ignoring #{serv['name']}"
 	end
-	puts "ignoring #{serv['name']}"
 }	
 bots.startAll
 utils.MainLoop

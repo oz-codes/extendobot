@@ -4,7 +4,7 @@ class Helo
 	include Cinch::Plugin
 	include Util::PluginHelper
 	set :prefix, /^:/
-	@@commands["helo"] = ":helo - say hi!"
+	@@commands["helo"] = ":helo - say helo"
 	match /helo/;
 	
 	def execute(m)

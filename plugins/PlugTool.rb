@@ -60,7 +60,7 @@ class PlugTool
 				kc = Kernel.const_get(modname)
 				i = ibot.plugins.find_index { |x| x.class == kc }
 				if(i == nil) 
-					m.reply("#{modname} not loaded currently") 
+					m.reply("#{modname} not loaded currently: " + Util::Util.instance.getExcuse()) 
 				else 
 					cmds = kc.class_eval { @clist }
 					

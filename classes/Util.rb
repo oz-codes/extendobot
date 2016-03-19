@@ -1,16 +1,71 @@
 require 'pathname'
 require 'cinch'
-require_relative "Hooks.rb"
+require_relative "Hooks.rb"	
 
 module Util	
 	class Util
 		require 'mongo';
 		include Mongo;
 		Mongo::Logger.logger.level = ::Logger::FATAL
+		def getExcuse 
+			if(@@excuses.count <= 0) 
+				rebuildExcuses()
+			end
+			rdx = rand(@@excuses.count)
+			excuse = @@excuses[rdx]
+			return excuse
+			#todo: get random excuse from extendobot.excuses lmao
+		end
+		def getSuccess
+			if(@@success.count <= 0) 
+				rebuildSuccess()
+			end
+			rdx = rand(@@success.count)
+			success = @@success[rdx]
+			return success
+			#todo: get random success from extendobot.success lmao
+		end
+		def addExcuse(exc) 
+			excuses = getCollection("extendobot", "excuses")
+			res = excuses.insert_one({"string" => exc})
+			if(res) 
+				rebuildExcuses()
+				return 1
+			else
+				return 0
+			end
+		end
+		def addSuccess(suc) 
+			succ = getCollection("extendobot", "success")
+			res = succ.insert_one({"string" => suc})
+			if(res) 
+				rebuildSuccess()
+				return 1
+			else
+				return 0
+			end
+		end
+		def rebuildSuccess
+			@@success = []
+			success = getCollection("extendobot","success")
+			success.find().each { |excuse|
+				@@success.push(excuse[:string])
+			}
+		end
+
+		def rebuildExcuses
+			@@excuses = [];
+			excuses = getCollection("extendobot","excuses")
+			excuses.find().each { |excuse|
+				@@excuses.push(excuse[:string])
+			}
+		end
 		def self.instance 
 			@@instance ||= new
 		end
 		def initialize	
+			@@excuses = [];
+			@@success = [];
 			@@url = "127.0.0.1:27017"
 			@@mongos = {};
 			@@mongos[:chans] = Mongo::Client.new([@@url], :database => "chans")
@@ -18,7 +73,15 @@ module Util
 			@@mongos[:acl] = Mongo::Client.new([@@url], :database => "acl")
 		end
 		def getDB(dbn)
-			return @@mongos[dbn.to_sym]
+			if(db = @@mongos[dbn.to_sym])
+				puts "#{dbn} exists"
+				p db
+				return db
+			else
+				puts "initializing connection to #{dbn}"
+				p @@mongos[dbn.to_sym] = Mongo::Client.new([@@url], :database => dbn)
+				return @@mongos[dbn.to_sym]
+			end
 		end
 		def getCollection(dbn,col) 
 			return self.getDB(dbn)[col.to_sym]
@@ -96,7 +159,7 @@ module Util
 			@bot = Cinch::Bot.new do
 			  configure do |c|
 			    c.server   = host
-			    mong       = Util.new
+			    mong       = Util.instance
 			    conf       = mong.getCollection("extendobot","config");
 			    name = mong.hton(host)
 			    c.nick = conf.find({ 'key' => 'nick', 'server' => name }).each.next_values()[0]["val"] 
@@ -136,6 +199,64 @@ module Util
 			return ret
 		end
 				
+	end
+	module ACLHelper
+		def get_acl(m, user)
+			users = Util.instance.getCollection("acl","users")
+			name = Util.instance.hton(m.bot.config.server)
+			res = users.find({'user' => user, 'server' => name}).each.next_values()[0];
+		end
+	
+		def set_acl(m, user, level)
+			users = Util.instance.getCollection("acl","users")
+			name = Util.instance.hton(m.bot.config.server)
+			if(users.find({'user' => user, 'server' => name})) 
+				if(users.update({'user' => user, 'server' => name}, {'$set' => {'level' => level}}))
+					m.reply("{#user} modified with level #{level}")
+				else 
+					m.reply("#{user} couldn't be modified")
+				end
+			else
+				m.reply("#{user} not in database")
+			end
+		end
+
+		def add_acl(m, user, level)
+			users = Util.instance.getCollection("acl","users")
+			name = Util.instance.hton(m.bot.config.server)
+			if(users.find({'user' => user, 'server' => name})) 
+				m.reply("#{user} already in database")
+			else
+				if(users.insert({'user' => user, 'server' => name, 'level' => level}))
+					m.reply("#{user} added with level #{level}")
+				else
+					m.reply("#{user} could not be modified")
+				end
+			end
+		end
+
+		def rm_acl(m, user)
+			users = Util.instance.getCollection("acl","users")
+			name = Util.instance.hton(m.bot.config.server)
+			if(users.find({'user' => user, 'server' => name})) 
+				if(users.remove({'user' => user, 'server' => name}))
+					m.reply("#{user} removed}")
+				else
+					m.reply("#{user} could not be removed")
+				end
+			else
+				m.reply("#{user} not in database")			
+			end
+		end
+		
+
+		def list_acl(m)
+			users = Util.instance.getCollection("acl","users")
+			name = Util.instance.hton(m.bot.config.server)
+			users.find({'server' => name}).each { |res|
+				m.reply(res['user'] << "@" << res["server"] << ": " << res["level"].to_s)
+			}
+		end
 	end
 end
 

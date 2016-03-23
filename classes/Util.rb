@@ -1,5 +1,6 @@
 require 'pathname'
 require 'cinch'
+require "cinch/plugins/identify"
 require_relative "Hooks.rb"	
 
 module Util	
@@ -71,9 +72,11 @@ module Util
 			@@mongos[:chans] = Mongo::Client.new([@@url], :database => "chans")
 			@@mongos[:extendobot] = Mongo::Client.new([@@url], :database => "extendobot")
 			@@mongos[:acl] = Mongo::Client.new([@@url], :database => "acl")
+			@@mongos[:markov] = Mongo::Client.new([@@url], :database => "markov")
 		end
 		def getDB(dbn)
-			if(db = @@mongos[dbn.to_sym])
+			db = @@mongos[dbn.to_sym]
+			if(db)
 				puts "#{dbn} exists"
 				p db
 				return db
@@ -162,7 +165,14 @@ module Util
 			    mong       = Util.instance
 			    conf       = mong.getCollection("extendobot","config");
 			    name = mong.hton(host)
-			    c.nick = conf.find({ 'key' => 'nick', 'server' => name }).each.next_values()[0]["val"] 
+			    c.nick = conf.find({ 'key' => 'nick', 'server' => name }).to_a[0]["val"] 
+			    passwd = nil 
+	  		    pass = conf.find({ 'key' => 'pass', 'server' => name })
+			  
+			    if(pass.to_a[0])
+			    	passwd = pass.to_a[0]["val"]
+			    end
+			
 			    chans      = mong.getCollection("chans","channels")
 			    cList      = chans.find({'autojoin' => true, 'server' => name}).collect { |x| 
 					x['channel']			
@@ -172,11 +182,24 @@ module Util
 			    Pathname.glob("/var/src/ruby/extendobot/plugins/*.rb").each { |plugin|
 				puts "found plugin #{plugin}"
 					
-				load plugin
+				load plugin		
 				puts Object.const_get(File.basename(plugin.basename,File.extname(plugin)).to_s)
 				pList.push(Object.const_get(File.basename(plugin.basename,File.extname(plugin)).to_s))
 			    }
 			    c.plugins.plugins = pList
+			    on :"477" do |m|
+				puts "477, trying again in 5..."
+				p m 				
+				Timer(5, {:shots => 4}) { m.bot.join(m.channel) }
+			    end
+			    if(passwd != nil) 
+			    		c.plugins.plugins.push(Cinch::Plugins::Identify)
+					c.plugins.options[Cinch::Plugins::Identify] = {
+						:username => c.nick,
+						:type 	=> :nickserv,
+						:password => passwd
+					}
+			     end
 		  end
 		end
 

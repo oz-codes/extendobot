@@ -9,7 +9,7 @@ class Markovian
 	set :prefix, /^:/
 	@clist = %w{markov}
 	@@commands["markov"] = ":markov <length> - markov chainsaw of <length>"
-	match /markov (\d+)?/, method: :markov
+	match /markov (\d+)( \w+)?/, method: :markov
 	match /markov$/, method: :markov
 	listen_to :channel
 	
@@ -40,9 +40,9 @@ class Markovian
 		}
 	end
 
-	def markov(m,length=nil)
+	def markov(m,length=nil, seed=nil)
 		
-		out = start(length == nil ? length : length.to_i)
+		out = start(m,length == nil ? length : length.to_i, seed)
 		puts "markov out:\n\t#{out}"
 		m.reply(out)
 		
@@ -53,14 +53,14 @@ class Markovian
 		if(seed == nil)
 			res = db.find()
 			tmp = res.to_a
-			ret = tmp[rand(tmp.count)]
+			ret = tmp[rand(res.count).to_i]
 		else
 			ret = getRow(seed)
 		end
 		return ret
 	end
 		
-	def start(words=nil, seed=nil)
+	def start(m,words=nil, seed=nil)
 		db = Util::Util.instance.getCollection("markov","ngrams") 
 		res = ""
 		if(words == nil)
@@ -68,13 +68,21 @@ class Markovian
 		end
 		puts "begin markov chainsaw"
 		puts "start.count: #{words}, start.seed: #{seed}"
-		row = getRandomRow(seed)
+		seed.strip! if seed != nil
 		out = ""
+		row = getRandomRow(seed)
 		i = 0
+		head = ""
+		tail = []
 		while i < words
 			#puts i
-			head = row[:head]
-			tail = row[:tail]
+			begin
+				head = row[:head]
+				tail = row[:tail]
+			rescue
+				m.reply "error: " << Util::Util.instance.getExcuse()
+				return
+			end
 			n = tail.shift
 			#next if n == nil
 			#puts "\t#{head} -> #{n}"
@@ -95,7 +103,7 @@ class Markovian
 	end
 	def getRow(head)
 		db = Util::Util.instance.getCollection("markov","ngrams") 
-		res = db.find({'head' => head}).to_a[0]
-		return res
+		res = db.find({'head' => head}).to_a
+		return res[rand(res.count).to_i]
 	end
 end

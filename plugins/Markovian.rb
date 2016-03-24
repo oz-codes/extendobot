@@ -10,7 +10,7 @@ class Markovian
 	@clist = %w{markov}
 	@@commands["markov"] = ":markov <length> - markov chainsaw of <length>"
 	match /markov (\d+)?/, method: :markov
-	match /markov/, method: :markov
+	match /markov$/, method: :markov
 	listen_to :channel
 	
 	def listen(m)
@@ -43,6 +43,7 @@ class Markovian
 	def markov(m,length=nil)
 		
 		out = start(length == nil ? length : length.to_i)
+		puts "markov out:\n\t#{out}"
 		m.reply(out)
 		
 	end
@@ -62,9 +63,11 @@ class Markovian
 	def start(words=nil, seed=nil)
 		db = Util::Util.instance.getCollection("markov","ngrams") 
 		res = ""
-		words = (4+rand(24).to_i) if words == nil
-		#puts "begin markov chainsaw"
-		#puts "start.count: #{words}, start.seed: #{seed}"
+		if(words == nil)
+			words = (4+rand(24).to_i)
+		end
+		puts "begin markov chainsaw"
+		puts "start.count: #{words}, start.seed: #{seed}"
 		row = getRandomRow(seed)
 		out = ""
 		i = 0
@@ -76,13 +79,13 @@ class Markovian
 			#next if n == nil
 			#puts "\t#{head} -> #{n}"
 			out += "#{head} "
-			if(n == nil)
+			while(n == nil)
 				row = getRandomRow()
-				next
+				n = row[:tail].shift
 			end
 			row = getRow(n)
 			#puts "\trow: "
-			p row
+			#p row
 			#puts "out: #{out}"
 			i+=1
 		end

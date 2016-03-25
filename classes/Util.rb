@@ -104,9 +104,13 @@ module Util
 			return name.next_values()[0]["name"];	
 		end
 		def MainLoop
-			Thread.list.each { |thr|
-				thr.join
-			}
+			begin
+				Thread.list.each { |thr|
+					thr.join
+				}
+			rescue ThreadError => e
+				puts e.inspect
+			end
 		end
 	end
 	class BotFamily

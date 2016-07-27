@@ -58,7 +58,7 @@ class Markovian
 	end
 
 	def markov(m,seed=nil,length=nil)
-		out = start(m,length == nil ? length : length.to_i, seed)
+		out = start(m,seed,length == nil ? length : length.to_i)
 		puts "markov out:\n\t#{out}"
 		m.reply(out)
 		
@@ -75,7 +75,7 @@ class Markovian
 		return ret
 	end
 		
-	def start(m,words=nil, seed=nil)
+	def start(m, seed=nil, words=nil)
 		db = Util::Util.instance.getCollection("markov","ngrams") 
 		res = ""
 		if(words == nil)

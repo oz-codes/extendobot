@@ -16,7 +16,7 @@ class Replace
 		res = db.find({
 			"server" => Util::Util.instance.hton(m.bot.config.server),
 			"text"   => /#{search}/
-		}).sort({"time" => -1})	
+		}).limit(30).sort({"time" => -1})	
 		out = ""
 		puts "searching for re"
 		p /#{search}/

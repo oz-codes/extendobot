@@ -77,11 +77,11 @@ module Util
 		def getDB(dbn)
 			db = @@mongos[dbn.to_sym]
 			if(db)
-				puts "#{dbn} exists"
+				#puts "#{dbn} exists"
 				p db
 				return db
 			else
-				puts "initializing connection to #{dbn}"
+				#puts "initializing connection to #{dbn}"
 				p @@mongos[dbn.to_sym] = Mongo::Client.new([@@url], :database => dbn)
 				return @@mongos[dbn.to_sym]
 			end
@@ -93,6 +93,7 @@ module Util
 			servers = Array.new()
 			col = self.getCollection("chans","servers")
 			col.find.each { |row| 
+				puts "dicks dicks dicks"
 				servers.push(row)
 			}
 			return servers
@@ -234,7 +235,7 @@ module Util
 			users = Util.instance.getCollection("acl","users")
 			name = Util.instance.hton(m.bot.config.server)
 			if(users.find({'user' => user, 'server' => name})) 
-				if(users.update({'user' => user, 'server' => name}, {'$set' => {'level' => level}}))
+				if(users.update_one({'user' => user, 'server' => name}, {'$set' => {'level' => level}}))
 					m.reply("{#user} modified with level #{level}")
 				else 
 					m.reply("#{user} couldn't be modified")

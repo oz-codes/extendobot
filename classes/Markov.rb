@@ -32,6 +32,7 @@ class Markovin8or
 			tail = []
 			head = words[idx] #head = current word
 			break if head == nil
+			next if head == ""
 			#puts "idx: #{idx}"
 			#print " head: #{head}\n"
 			for jdx in 1..@arity-1  #tail is cur+1, cur+2, ..., cur + @arity
@@ -41,11 +42,31 @@ class Markovin8or
 				tail.push(twd)
 			end
 			#puts "\n pushing markov"
-			markov = Markov.new(head, tail) #make new Markov instance
+			markov = {:head => head, :tail => tail} #make new Markov instance
 			#p markov
 			chains.push( markov ) ##push markov onto chain list
 		end
 		@chains = chains #set chains in state to the generated chains
 		return chains
+	end
+	def mongoize(chains=nil)
+		chains = @chains if chains == nil
+		heads = chains.map { |v|
+			v[:head]
+		}
+		#puts heads.inspect
+		markov = {}
+		heads.each { |head|
+			if(!markov[head]) 
+				markov[head] = []
+			end
+			tails = chains.select { |v| v[:head] == head }.map { |v| v[:tail] }.flatten
+			markov[head] = tails
+		}
+		mkvs = []
+		markov.each_pair { |k,v|
+			mkvs.push({:head => k, :tails => v})
+		}
+		return mkvs
 	end
 end

@@ -9,8 +9,9 @@ class Markovian
 	set :prefix, /^:/
 	@clist = %w{markov}
 	@@commands["markov"] = ":markov <length> <seed>- generates a markov chain of <length> words, starting with optional word <seed>"
-	match /markov (\d+)( \w+)?/, method: :markov
 	match /markov$/, method: :markov
+	match /markov (\w+)/, method: :markov
+	match /markov (\w+) (\d+)/, method: :markov
 	listen_to :channel
 	
 	def listen(m)

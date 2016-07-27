@@ -84,7 +84,12 @@ class Markovian
 		words = words > 32 ? 32 : words
 		#puts "begin markov chainsaw"
 		#puts "start.count: #{words}, start.seed: #{seed}"
-		seed.strip! if seed != nil
+		if seed != nil
+                        seed.strip!
+                else
+                        tmp = getRandomRow()
+                        seed = tmp[:head]
+                end
 		out = ""
 		if(seed.match(/ /))
 			a = seed.split(/ /)

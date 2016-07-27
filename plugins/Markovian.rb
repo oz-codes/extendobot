@@ -57,7 +57,7 @@ class Markovian
 		}
 	end
 
-	def markov(m,length=nil, seed=nil)
+	def markov(m,seed=nil,length=nil)
 		out = start(m,length == nil ? length : length.to_i, seed)
 		puts "markov out:\n\t#{out}"
 		m.reply(out)

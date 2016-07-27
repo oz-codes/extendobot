@@ -18,7 +18,7 @@ class Forget
 		end
 		ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
 		plug = Kernel.const_get(modname)
-		require "/var/src/ruby/extendobot/plugins/#{modname}.rb"
+		require "./plugins/#{modname}.rb"
 		ibot.plugins.unregister_plugin(plug)
 		m.reply("#{modname} forgotten successfully")
 	end

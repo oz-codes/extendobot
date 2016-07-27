@@ -180,7 +180,7 @@ module Util
 			    }
 			    c.channels = cList
 			    pList = Array.new
-			    Pathname.glob("/var/src/ruby/extendobot/plugins/*.rb").each { |plugin|
+			    Pathname.glob("./plugins/*.rb").each { |plugin|
 				puts "found plugin #{plugin}"
 					
 				load plugin		

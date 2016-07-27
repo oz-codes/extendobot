@@ -17,7 +17,7 @@ class Pastebin
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
 		end
-		path = "/var/src/ruby/extendobot/plugins/#{modname}.rb"
+		path = "./plugins/#{modname}.rb"
 		if(File.exist?(path)) 
 			IO.popen("pastebin -f #{path} -l ruby -n '#{modname} src'").readlines.each { |line| m.reply line }
 		 else 

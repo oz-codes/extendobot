@@ -25,7 +25,7 @@ class DynPlug
 			return
 		end
 		begin
-			if(File.exist?("/var/src/ruby/extendobot/plugins/#{modname}.rb")) 
+			if(File.exist?("./plugins/#{modname}.rb")) 
 				m.reply("plugin with name #{modname} already exists")
 				return false;
 			end
@@ -34,21 +34,21 @@ class DynPlug
 				open(url) do |f|
 					content = f.read
 					content.gsub!(%r{</?[^>]+?>}, '')
-					open("/var/src/ruby/extendobot/plugins/#{modname}.rb", "w") do |plugin|
+					open("./plugins/#{modname}.rb", "w") do |plugin|
 						plugin.write content
 					end
 				end
 			rescue Exception => error
 				m.user.send("Error downloading #{modname}: #{error}")
 			end
-			load "/var/src/ruby/extendobot/plugins/#{modname}.rb";
+			load "./plugins/#{modname}.rb";
 			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
 			ibot.plugins.register_plugin(Object.const_get(modname))
 			m.reply("#{modname} added successfully")
 		rescue Exception => error
 			m.user.send "Error loading #{modname}: #{error}"
 			m.reply "Error loading, deleting downloaded module. Check privmsg for details"
-			m.user.send "#{modname}.rb deleted" if File.unlink "/var/src/ruby/extendobot/plugins/#{modname}.rb"
+			m.user.send "#{modname}.rb deleted" if File.unlink "./plugins/#{modname}.rb"
 		end
 	end
 
@@ -67,7 +67,7 @@ class DynPlug
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
 		end
-		if(File.exist?("/var/src/ruby/extendobot/plugins/#{modname}.rb")) 
+		if(File.exist?("./plugins/#{modname}.rb")) 
 				
 			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
 			i = ibot.plugins.find_index { |x| x.class == Kernel.const_get(modname) }
@@ -88,14 +88,14 @@ class DynPlug
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
 		end
-		if(File.exist?("/var/src/ruby/extendobot/plugins/#{modname}.rb")) 	
+		if(File.exist?("./plugins/#{modname}.rb")) 	
 			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
 			i = ibot.plugins.find_index { |x| x.class == modname }
 			if(i != nil) 
 				m.reply("#{modname} already loaded; try :reload instead")
 			else 
 				begin
-					load "/var/src/ruby/extendobot/plugins/#{modname}.rb"
+					load "./plugins/#{modname}.rb"
 				rescue Exception => error
 					m.reply "Error loading #{modname}. check privmsg for details"
 					m.user.send "Error loading #{modname}: #{error}"

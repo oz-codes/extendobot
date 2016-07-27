@@ -27,7 +27,7 @@ class PlugTool
 	def plugs(m, opt) 
 		debug "in plugs, got opt as #{opt.to_s}"
 		plugs = Hash.new
-		Pathname.glob("/var/src/ruby/extendobot/plugins/*.rb").each { |plugin|
+		Pathname.glob("./plugins/*.rb").each { |plugin|
 				plugname = File.basename(plugin.basename,File.extname(plugin))
                                 plugs[plugname] = Hash.new
 				plugs[plugname]["enabled"] = m.bot.config.plugins.plugins.include? Object.const_get plugname
@@ -54,7 +54,7 @@ class PlugTool
 		if(modname != nil)
 			puts modname 
 			modname.strip!
-			if(File.exist?("/var/src/ruby/extendobot/plugins/#{modname}.rb")) 
+			if(File.exist?("./plugins/#{modname}.rb")) 
 				
 				ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
 				kc = Kernel.const_get(modname)

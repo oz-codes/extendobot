@@ -10,8 +10,8 @@ class Markovian
 	@clist = %w{markov}
 	@@commands["markov"] = ":markov <length> <seed>- generates a markov chain of <length> words, starting with optional word <seed>"
 	match /markov$/, method: :markov
-	match /markov (\w+)$/, method: :markov
-	match /markov (\w+) (\d+)$/, method: :markov
+	match /markov (\d+)$/, method: :markov
+	match /markov (\d+) ((\w| )+)$/, method: :markov
 	listen_to :channel
 	
 	def listen(m)
@@ -57,7 +57,7 @@ class Markovian
 		}
 	end
 
-	def markov(m,seed=nil,length=nil)
+	def markov(m,length=nil,seed=nil)
 		out = start(m,seed,length == nil ? length : length.to_i)
 		puts "markov out:\n\t#{out}"
 		m.reply(out)
@@ -100,6 +100,7 @@ class Markovian
 		i = 0
 		head = ""
 		tails = []
+		addP = false
 		while i < words
 			#puts i
 		
@@ -110,10 +111,17 @@ class Markovian
 				tails = row[:tails]
 				test = row == nil or !row.key?(:head) or row[:head] == nil or row[:head] == "" or tails == nil
 			#	puts "new row: #{row.inspect}"				
-				break if !test
+				if test
+					addP = true
+				else 
+					break
+				end
 			#	puts "heaheahea"
 			end
-			out += ". " if seed == nil
+			if addP 
+				out += ". "
+				addP = false
+			end
 			tail = tails[rand(tails.count())]
 			#next if n == nil
 			#puts "\t#{head} -> #{n}"

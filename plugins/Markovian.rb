@@ -11,7 +11,7 @@ class Markovian
 	@@commands["markov"] = ":markov <length> <seed>- generates a markov chain of <length> words, starting with optional word <seed>"
 	match /markov$/, method: :markov
 	match /markov (\d+)$/, method: :markov
-	match /markov (\d+) ((\w| )+)$/, method: :markov
+	match /markov (\d+) ([\w ]+))$/, method: :markov
 	listen_to :channel
 	
 	def listen(m)

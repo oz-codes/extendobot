@@ -113,6 +113,7 @@ class Markovian
 				break if !test
 			#	puts "heaheahea"
 			end
+			out += ". " if seed == nil
 			tail = tails[rand(tails.count())]
 			#next if n == nil
 			#puts "\t#{head} -> #{n}"

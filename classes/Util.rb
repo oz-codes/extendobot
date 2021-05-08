@@ -1,6 +1,5 @@
 require 'pathname'
 require 'cinch'
-require "cinch/plugins/identify"
 require_relative "Hooks.rb"	
 
 module Util	

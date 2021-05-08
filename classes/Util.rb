@@ -201,7 +201,7 @@ module Util
 				p m 				
 				Timer(5, {:shots => 4}) { m.bot.join(m.channel) }
 			    end
-                            /*
+=begin
 			    if(passwd != nil) 
 			    		c.plugins.plugins.push(Cinch::Plugins::Identify)
 					c.plugins.options[Cinch::Plugins::Identify] = {
@@ -210,7 +210,7 @@ module Util
 						:password => passwd
 					}
 			     end
-                             */
+=end
 		  end
 		end
 

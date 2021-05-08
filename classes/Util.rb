@@ -162,7 +162,13 @@ module Util
 		def initialize(host) 
 			@bot = Cinch::Bot.new do
 			  configure do |c|
-			    c.server   = host
+                            hostname, port = host.split(/:/)
+                            if(port.nil?) 
+                              port=6697
+                            end
+			    c.server   = hostname
+                            c.port     = port
+                            c.ssl.use = (port==6697?true:false)
 			    mong       = Util.instance
 			    conf       = mong.getCollection("extendobot","config");
 			    name = mong.hton(host)
@@ -173,7 +179,8 @@ module Util
 			    if(pass.to_a[0])
 			    	passwd = pass.to_a[0]["val"]
 			    end
-			
+                            c.sasl.username=c.nick	
+                            c.sasl.password=passwd
 			    chans      = mong.getCollection("chans","channels")
 			    cList      = chans.find({'autojoin' => true, 'server' => name}).collect { |x| 
 					x['channel']			
@@ -193,7 +200,7 @@ module Util
 				p m 				
 				Timer(5, {:shots => 4}) { m.bot.join(m.channel) }
 			    end
-			    if(passwd != nil) 
+			    /*if(passwd != nil) 
 			    		c.plugins.plugins.push(Cinch::Plugins::Identify)
 					c.plugins.options[Cinch::Plugins::Identify] = {
 						:username => c.nick,
@@ -201,6 +208,7 @@ module Util
 						:password => passwd
 					}
 			     end
+                             */
 		  end
 		end
 

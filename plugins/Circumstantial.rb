@@ -17,14 +17,16 @@ class Circumstantial
 	match /github$/, method: :github
 
 	def github (m)
-		m.reply "http://github.com/8dx/extendobot"
+		m.reply "http://github.com/oz-codes/extendobot"
 	end
 
 	def excuse (m)
-		m.reply(m.user.nick + ": " + Util::Util.instance.getExcuse())
+                e = Util::Util.instance.getExcuse()
+		m.reply("#{m.user.nick}: #{e}")
 	end
 	def success (m)
-		m.reply (m.user.nick + ": " + Util::Util.instance.getSuccess())
+                e = Util::Util.instance.getSuccess()
+		m.reply("#{m.user.nick}: #{e}")
 	end
 	def excuse_add (m, exc)
 		res = Util::Util.instance.addExcuse(exc)

@@ -1,5 +1,4 @@
-#!/usr/bin/ruby1.9.1
-require 'cinch'
+#!/usr/bin/env rubyrequire 'cinch'
 
 module RandHook
 		  include Cinch::Plugin

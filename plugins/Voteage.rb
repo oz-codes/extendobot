@@ -24,7 +24,7 @@ class Voteage
 			end
 			db.insert_one({
 				"user" => match[1], 
-				"server" => Util::Util.instance.hton(m.bot.config.server),
+				"server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}"),
 				"voter" => m.user.nick,
 				"value" => val
 			})
@@ -35,7 +35,7 @@ class Voteage
 		user.strip!
 		score = 0
 		db = Util::Util.instance.getCollection("extendobot","votes")
-		server = Util::Util.instance.hton(m.bot.config.server)
+		server = Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 		puts "finding votes for #{user} on #{server}"
 		res = db.find({"user" => user, "server" => server})
 		if(res.count > 0)

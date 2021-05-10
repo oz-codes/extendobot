@@ -8,21 +8,21 @@ module Util
 		include Mongo;
 		Mongo::Logger.logger.level = ::Logger::FATAL
 		def getExcuse 
+                        puts "trying to get an excuse.... excuses count: #{@@excuses.count}"
 			if(@@excuses.count <= 0) 
+                              puts "rebnuilding excuses!!!!"
 				rebuildExcuses()
 			end
-			rdx = rand(@@excuses.count)
-			excuse = @@excuses[rdx]
-			return excuse
+                        return @@excuses.sample
 			#todo: get random excuse from extendobot.excuses lmao
 		end
 		def getSuccess
+                        puts "trying to get a success.... success count: #{@@success.count}"
 			if(@@success.count <= 0) 
+                                puts "rebuilddng successes!!!"
 				rebuildSuccess()
 			end
-			rdx = rand(@@success.count)
-			success = @@success[rdx]
-			return success
+                        return @@success.sample
 			#todo: get random success from extendobot.success lmao
 		end
 		def addExcuse(exc) 
@@ -49,6 +49,7 @@ module Util
 			@@success = []
 			success = getCollection("extendobot","success")
 			success.find().each { |excuse|
+                                puts "got a success: " + excuse.inspect
 				@@success.push(excuse[:string])
 			}
 		end
@@ -57,6 +58,7 @@ module Util
 			@@excuses = [];
 			excuses = getCollection("extendobot","excuses")
 			excuses.find().each { |excuse|
+                                puts "got a excuse: " + excuse.inspect
 				@@excuses.push(excuse[:string])
 			}
 		end
@@ -88,6 +90,15 @@ module Util
 		def getCollection(dbn,col) 
 			return self.getDB(dbn)[col.to_sym]
 		end
+                def addautojoin(server,chan)
+                  chans = self.getCollection("chans","channels")
+                  chans.insert({
+                      'autojoin' => true,
+                      'channnel' => chan,
+                      'server'  => server
+                    })
+                end
+
 		def getServers()
 			servers = Array.new()
 			col = self.getCollection("chans","servers")
@@ -100,13 +111,18 @@ module Util
 		def hton(host)
 			col = getCollection("chans","servers")
 			name = ""
-			name = col.find({ "host" => host }).limit(1).each 
-			return name.next_values()[0]["name"];	
+                        puts "WE TRYNNA FIND HOST: #{host}"
+                        name = col.find({ "host" => host }).limit(1).to_a[0]
+                        puts "okay here is the thinng.."
+                        puts name.inspect
+			return name["name"];	
 		end
 		def MainLoop
-			Thread.list.each { |thr|
-				thr.join
-			}
+                  Thread.list.reject { |t| 
+                    t == Thread.current
+                  }.each            { |thr|
+                    thr.join
+                  }
 		end
 	end
 	class BotFamily
@@ -127,7 +143,7 @@ module Util
 		end
 		def add(opts)
 			host = opts['host'] || nil;
-			name = opts['name'] || nil;
+                        name = opts['name'] || nil;
 			@@family[name] = Bot.new(host)
 		end
 		def spawn(opts)
@@ -164,10 +180,17 @@ module Util
                             hostname, port = host.split(/:/)
                             if(port.nil?)
                               port=6667
+                            else
+                              port = port.to_i
                             end
 			    c.server   = hostname
                             c.port     = port
-                            c.ssl.use = port==6697
+                            if(port == 6697)
+                              10.times { puts "WE GOT SSL  BRO" }
+                              puts "SSL!"
+                              c.ssl.use  = true
+                            end
+                            puts "port: #{port}, ssl.use: #{c.ssl.use}" 
 			    mong       = Util.instance
 			    conf       = mong.getCollection("extendobot","config");
 			    name = mong.hton(host)
@@ -236,13 +259,13 @@ module Util
 	module ACLHelper
 		def get_acl(m, user)
 			users = Util.instance.getCollection("acl","users")
-			name = Util.instance.hton(m.bot.config.server)
+			name = Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 			res = users.find({'user' => user, 'server' => name}).each.next_values()[0];
 		end
 	
 		def set_acl(m, user, level)
 			users = Util.instance.getCollection("acl","users")
-			name = Util.instance.hton(m.bot.config.server)
+			name = Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 			if(users.find({'user' => user, 'server' => name})) 
 				if(users.update_one({'user' => user, 'server' => name}, {'$set' => {'level' => level}}))
 					m.reply("{#user} modified with level #{level}")
@@ -256,7 +279,7 @@ module Util
 
 		def add_acl(m, user, level)
 			users = Util.instance.getCollection("acl","users")
-			name = Util.instance.hton(m.bot.config.server)
+			name = Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 			if(users.find({'user' => user, 'server' => name})) 
 				m.reply("#{user} already in database")
 			else
@@ -270,7 +293,7 @@ module Util
 
 		def rm_acl(m, user)
 			users = Util.instance.getCollection("acl","users")
-			name = Util.instance.hton(m.bot.config.server)
+			name = Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 			if(users.find({'user' => user, 'server' => name})) 
 				if(users.remove({'user' => user, 'server' => name}))
 					m.reply("#{user} removed}")
@@ -285,9 +308,10 @@ module Util
 
 		def list_acl(m)
 			users = Util.instance.getCollection("acl","users")
-			name = Util.instance.hton(m.bot.config.server)
+			name = Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
+                        puts "uh we got a lookup for #{name} my ninja"
 			users.find({'server' => name}).each { |res|
-				m.reply(res['user'] << "@" << res["server"] << ": " << res["level"].to_s)
+				m.reply(res['user'] << "@" << res["server"] << ": " << res["level"].to_ss)
 			}
 		end
 	end

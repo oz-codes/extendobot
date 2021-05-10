@@ -14,7 +14,7 @@ class Replace
 	def replace(m, search, replace, global=nil)
 		db = Util::Util.instance.getCollection("extendobot","logs")
 		res = db.find({
-			"server" => Util::Util.instance.hton(m.bot.config.server),
+			"server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}"),
 			"text"   => /#{search}/
 		}).limit(30).sort({"time" => -1})	
 		out = ""

@@ -15,7 +15,7 @@ class Loggr
 		puts "loggr\n\t#{user}: #{text}"
 		db = Util::Util.instance.getCollection("extendobot","logs") 
 		tm = Time.now.to_i
-		server = Util::Util.instance.hton(m.bot.config.server)
+		server = Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 		db.insert_one({'channel' => channel, 'user' => user, 'text' => text, 'time' => tm, 'server' => server})
 	end
 end

@@ -17,6 +17,7 @@ class RawCmd
 	def raw(m, cmd)
 		aclcheck(m)
 		if(!aclcheck(m)) 
+                        e = Util::Util.instance.getExcuse()
 			m.reply("#{m.user.nick}: quit trynna hax nga")
 			return
 		end

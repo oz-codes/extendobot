@@ -16,7 +16,7 @@ class Forget
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
 		end
-		ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+		ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 		plug = Kernel.const_get(modname)
 		require "./plugins/#{modname}.rb"
 		ibot.plugins.unregister_plugin(plug)

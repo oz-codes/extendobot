@@ -22,7 +22,7 @@ module Hooks
 			user = m.user.name
 			users = Util::Util.instance.getCollection("acl","users")
 			p users			
-			name = Util::Util.instance.hton(m.bot.config.server)
+			name = Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
 			p name
 			rs = users.find({'user' => user, 'server' => name})
 			res = rs.to_a[0]

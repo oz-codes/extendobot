@@ -56,7 +56,7 @@ class PlugTool
 			modname.strip!
 			if(File.exist?("./plugins/#{modname}.rb")) 
 				
-				ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+				ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 				kc = Kernel.const_get(modname)
 				i = ibot.plugins.find_index { |x| x.class == kc }
 				if(i == nil) 

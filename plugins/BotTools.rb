@@ -12,14 +12,16 @@ class BotTools
 	@@levelRequired = 10
 	match /join (#.+)/, method: :join;
 	match /part (#.+)/, method: :part;
+        match /stay (#.+)/, method: :stay
 	
 	def join(m, chan)
 		aclcheck(m)
+                puts m.inspect
 		if(!aclcheck(m)) 
 			m.reply("#{m.user.nick}: " + Util::Util.instance.getExcuse())
 			return
 		end
-		bot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+		bot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 		idx = bot.channels.find_index { |x| x.name == chan }
 	
 		if(idx == nil) 
@@ -35,7 +37,7 @@ class BotTools
 			m.reply("#{m.user.nick}: " + Util::Util.instance.getExcuse())
 			return
 		end
-		ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+		ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 		idx = bot.channels.find_index { |x| x.name == chan }
 		if(idx != nil) 
 			m.reply "parting #{chan}"
@@ -44,6 +46,10 @@ class BotTools
 			m.reply "not in #{chan}"
 		end
 	end
+        def add_autojoin
+        end
+        def del_autojoin
+        end
 
 end
 

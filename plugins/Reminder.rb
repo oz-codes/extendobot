@@ -14,7 +14,7 @@ class Reminder
 
 	def remind (m, reminder)
 		db = Util::Util.instance.getCollection("extendobot","reminders")
-		v = db.insert_one({"user" => m.user.name, "server" => Util::Util.instance.hton(m.bot.config.server), "timestamp" => Time.now.to_i, "content" => reminder})
+		v = db.insert_one({"user" => m.user.name, "server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}"), "timestamp" => Time.now.to_i, "content" => reminder})
 		if(v)
 			str = m.user.name + ' ' + Util::Util.instance.getSuccess()
 		else
@@ -25,7 +25,7 @@ class Reminder
 
 	def list (m)
 		db = Util::Util.instance.getCollection("extendobot","reminders")
-		rs = db.find({"user" => m.user.name, "server" => Util::Util.instance.hton(m.bot.config.server)})
+		rs = db.find({"user" => m.user.name, "server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")})
 		if(rs.count > 0) 
 			rs.each { |res|
 				m.reply(res[:timestamp].to_s << ": " << res[:content])
@@ -39,7 +39,7 @@ class Reminder
 		db = Util::Util.instance.getCollection("extendobot","reminders")
 		out = []
 		puts "global: #{global}"
-		res = db.find({"content" => /#{regex}/, "user" => m.user.name, "server" => Util::Util.instance.hton(m.bot.config.server)})
+		res = db.find({"content" => /#{regex}/, "user" => m.user.name, "server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")})
 		if(global == nil) 
 			res.limit(1)
 			content = res.to_a[0][:content]

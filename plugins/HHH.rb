@@ -11,7 +11,17 @@ class HHH
 		:same =>
 			{ :match => /^same\s*/i, :response => "[✔] Same" },
 		:hi =>
-			{ :match => /^hi$/i, :response => "yes helo" }
+			{ :match => /^hi$/i, :response => "yes helo" },
+		:the =>
+			{ :match => /^the$/i, :response => "the" },
+                :five => 
+                        { :match => /^5/, :response => (("5 "*5)+"\n")*5 },
+                :good_bot => 
+                        { :match => /good bot/i, :method => Util::Util.instance.method(:getSuccess)},
+                :bad_bot => 
+                        { :match => /bad bot/i, :method => Util::Util.instance.method(:getExcuse )},
+
+
 	}
 	$can_speak = $responses.map { |k,v|
 		k.to_sym
@@ -29,7 +39,11 @@ class HHH
 				#puts "\t#{msg} matched #{v[:match]}"
 				target = k
 				#puts "\ttarget: #{target}, response: #{v[:response]}"
-				response = v[:response]
+                                if(v[:method].nil?)
+                                  response = v[:response]
+                                else 
+                                  response = v[:method].call
+                                end
 			end
 		}
 		puts response.inspect

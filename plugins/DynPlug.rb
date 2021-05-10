@@ -42,7 +42,7 @@ class DynPlug
 				m.user.send("Error downloading #{modname}: #{error}")
 			end
 			load "./plugins/#{modname}.rb";
-			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 			ibot.plugins.register_plugin(Object.const_get(modname))
 			m.reply("#{modname} added successfully")
 		rescue Exception => error
@@ -69,7 +69,7 @@ class DynPlug
 		end
 		if(File.exist?("./plugins/#{modname}.rb")) 
 				
-			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 			i = ibot.plugins.find_index { |x| x.class == Kernel.const_get(modname) }
 			if(i == nil) 
 				m.reply("#{modname} not loaded currently")
@@ -89,7 +89,7 @@ class DynPlug
 			return
 		end
 		if(File.exist?("./plugins/#{modname}.rb")) 	
-			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(m.bot.config.server)).bot
+			ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
 			i = ibot.plugins.find_index { |x| x.class == modname }
 			if(i != nil) 
 				m.reply("#{modname} already loaded; try :reload instead")

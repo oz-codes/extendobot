@@ -26,55 +26,70 @@ class PlugTool
 	end
 	def plugs(m, opt) 
 		debug "in plugs, got opt as #{opt.to_s}"
-		plugs = Hash.new
-		Pathname.glob("./plugins/*.rb").each { |plugin|
-				plugname = File.basename(plugin.basename,File.extname(plugin))
-                                plugs[plugname] = Hash.new
-				plugs[plugname]["enabled"] = m.bot.config.plugins.plugins.include? Object.const_get plugname
-				debug plugs[plugname].inspect
-                            }
+        debug "plugins: #{m.bot.config.plugins.plugins.inspect}"
+        #plugs = Hash.new #okay this really is not necessary. we can handle this in the glob.
+		plugs = Dir.glob("./plugins/*.rb").map { |plugin| #just map the glob to the necessary list
+            plugname = File.basename(plugin,".*")
+            puts "PLUGNAME: #{plugname}"
+            enabled = m.bot.config.plugins.plugins.include? Object.const_get plugname
+            puts "and enabled: #{enabled.inspect}"
+            ret = ( opt == :enabled  &&  enabled ) ||
+                  ( opt == :disabled && !enabled ) ||
+                  ( opt == :all                  ) ?
+                  plugname : nil
+            puts "\t and ret is #{ret.inspect}"
+            ret
+        }.reject(&:nil?)
+        puts "making the ultimate outcome #{plugs.inspect}"
+=begin      
+keeping this around for posterity...
+and as a reminder of how stupid i can be.
+
 		msg = ''
-		plugs.each { |k, v|
+        plugs.sort.to_h.
+          each { |k, v|
 			case opt
 				when :all
 					debug "all plugs pls"
 					msg += "#{k} "
 				when :disabled
 					debug "only disabled pls"
-					msg += "#{k} " if !v['enabled']
+					msg += "#{k} " if !v
 				when :enabled
 					debug "only enabled pls"
-					msg += "#{k} " if v['enabled']
+					msg += "#{k} " if v
 				end
 		}
-		m.reply(msg)
+=end
+        m.reply(plugs.sort.join(" "))
 	end
 	def pluginfo(m, modname = nil)
 		cmds = ""
-		if(modname != nil)
-			puts modname 
+        if(!modname.nil?)
+			debug "getting pluginfo for  #{modname}"
 			modname.strip!
 			if(File.exist?("./plugins/#{modname}.rb")) 
+              debug "looky here, plugins/#{modname}.rb does exist!"
 				
-				ibot = Util::BotFamily.instance.get(Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")).bot
+              #ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(Util::Util.buildHost(m.bot)#{m.bot.config.server}:#{m.bot.config.port}")).bot
+              #should be able to just do....
+              ibot = m.bot #how dumb am i lol
 				kc = Kernel.const_get(modname)
 				i = ibot.plugins.find_index { |x| x.class == kc }
 				if(i == nil) 
 					m.reply("#{modname} not loaded currently: " + Util::Util.instance.getExcuse()) 
 				else 
+                    debug "grabbing @clist for #{kc}"
 					cmds = kc.class_eval { @clist }
 					
 				end
 			end
 		else  
-			puts "no MODULE"
+			debug "no MODULE lol"
 			cmds = self.class.class_eval { @@commands }
-		end
-		str = ""
-		cmds.each { |k, v|
-			str << "#{k} "
-		}
-		m.reply(str)
+        end
+        m.reply sprintf("%s%s", modname.nil? ? "" : "Commands for #{modname}: ", cmds.sort.map(&:shift).join(" "))
+        m.reply "(btw, my prefix for commands is :)"
 	end		
 end
 		

@@ -18,7 +18,7 @@ class RawCmd
 		aclcheck(m)
 		if(!aclcheck(m)) 
                         e = Util::Util.instance.getExcuse()
-			m.reply("#{m.user.nick}: quit trynna hax nga")
+			m.reply("lolnorhx: #{e})")
 			return
 		end
 		IO.popen(cmd).readlines.each { |line|
@@ -29,7 +29,8 @@ class RawCmd
 	def reval(m, code) 
 		aclcheck(m)
 		if(!aclcheck(m)) 
-			m.reply("#{m.user.nick}: quit trynna hax nga")
+                        e = Util::Util.instance.getExcuse()
+			m.reply("lolnorhx: #{e})")
 			return
 		end
 		m.reply(eval(code));

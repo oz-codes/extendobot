@@ -11,7 +11,7 @@ class Help
 	def gethelp(m, mdl = nil)
 		case mdl
 			when nil
-				m.reply("try :help <cmd> to get help for a command.")
+				m.reply("try :help <cmd> to get help for a command, or :commands for a list of commands.")
 			else
 				mdl.strip!
 				cmds = self.class.class_eval { @@commands }

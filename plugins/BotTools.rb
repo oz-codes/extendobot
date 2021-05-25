@@ -9,10 +9,11 @@ class BotTools
 	@clist = %w{join part}
 	@@commands["join"] = ":join <channel> - join channel"
 	@@commands["part"] = ":part <channel> - part channel"
+    @@commands["stay"] = ":stay <channel> - join channel, and add it to autojoin for future sessions"
 	@@levelRequired = 10
 	match /join (#.+)/, method: :join;
 	match /part (#.+)/, method: :part;
-        match /stay (#.+)/, method: :stay
+    match /stay (#.+)/, method: :stay
 	
 	def join(m, chan)
 		aclcheck(m)
@@ -46,11 +47,17 @@ class BotTools
 			m.reply "not in #{chan}"
 		end
 	end
-        def add_autojoin
-        end
-        def del_autojoin
-        end
 
+        def stay(m, chan)
+          aclcheck(m)
+          if(!aclcheck(m))
+            m.reply("#{m.user.nick}:"+Util::Util.instance.getExcuse() + " (lol privilege checc)")
+          else 
+            m.reply "adding #{chan} to autojoin...."
+            Util::Util.addautojoin(chan, "#{m.bot.config.server}:#{m.bot.config.port}")
+            join(m,chan)
+          end
+        end
 end
 
 		

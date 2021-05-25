@@ -14,15 +14,17 @@ class Markovian
 	match /markov$/, method: :markov
 	match /markov (\d+)$/, method: :markov
 	match /markov (\d+) ([\w ]+)$/, method: :markov
-        match /chainsaw (.+)/, method: :chainsaw
+    match /chainsaw (.+)/, method: :chainsaw
 	listen_to :channel
 	
 	def listen(m)
-		return if m.message.match /^:/
-		text = m.message
-		user = m.user.nick
-                process(text,user)
+        return if m.message.match /^:/
+        text = m.message
+        user = m.user.nick
+        if(!["g1mp","van","durnkb0t"].include? user) 
+            process(text,user)
         end
+    end
 
         def process(text,user=nil)
 		#puts "Markovian\n\t#{user}: #{text}"

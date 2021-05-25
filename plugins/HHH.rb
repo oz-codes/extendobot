@@ -15,7 +15,7 @@ class HHH
 		:the =>
 			{ :match => /^the$/i, :response => "the" },
                 :five => 
-                        { :match => /^5/, :response => (("5 "*5)+"\n")*5 },
+                        { :match => /^(5 *|(5 )+)$/, :response => (("5 "*5)+"\n")*5 },
                 :good_bot => 
                         { :match => /good bot/i, :method => Util::Util.instance.method(:getSuccess)},
                 :bad_bot => 

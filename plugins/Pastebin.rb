@@ -19,7 +19,7 @@ class Pastebin
 		end
 		path = "./plugins/#{modname}.rb"
 		if(File.exist?(path)) 
-			IO.popen("pastebin -f #{path} -l ruby -n '#{modname} src'").readlines.each { |line| m.reply line }
+          m.reply IO.popen("pastebin -f #{path} -l ruby -n '#{modname} src'").readlines.pop
 		 else 
 			m.reply("#{modname} not found...")
 		end

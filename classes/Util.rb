@@ -28,7 +28,7 @@ module Util
 		def addExcuse(exc) 
 			excuses = getCollection("extendobot", "excuses")
 			res = excuses.insert_one({"string" => exc})
-			if(res) 
+			res) 
 				rebuildExcuses()
 				return 1
 			else
@@ -90,14 +90,15 @@ module Util
 		def getCollection(dbn,col) 
 			return self.getDB(dbn)[col.to_sym]
 		end
-                def addautojoin(server,chan)
-                  chans = self.getCollection("chans","channels")
-                  chans.insert({
-                      'autojoin' => true,
-                      'channnel' => chan,
-                      'server'  => server
-                    })
-                end
+
+        def addautojoin(server,chan)
+          chans = self.getCollection("chans","channels")
+          chans.insert({
+              'autojoin' => true,
+              'channnel' => chan,
+              'server'  => server
+            })
+        end
 
 		def getServers()
 			servers = Array.new()
@@ -108,6 +109,7 @@ module Util
 			}
 			return servers
 		end
+
 		def hton(host)
 			col = getCollection("chans","servers")
 			name = ""
@@ -194,6 +196,8 @@ module Util
 			    mong       = Util.instance
 			    conf       = mong.getCollection("extendobot","config");
 			    name = mong.hton(host)
+                c.server_queue_size = 512
+                c.messages_per_second = 64
 			    c.nick = conf.find({ 'key' => 'nick', 'server' => name }).to_a[0]["val"] 
 			    passwd = nil 
 	  		    pass = conf.find({ 'key' => 'pass', 'server' => name })
@@ -311,7 +315,7 @@ module Util
 			name = Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
                         puts "uh we got a lookup for #{name} my ninja"
 			users.find({'server' => name}).each { |res|
-				m.reply(res['user'] << "@" << res["server"] << ": " << res["level"].to_ss)
+				m.reply(res['user'] << "@" << res["server"] << ": " << res["level"].to_s)
 			}
 		end
 	end

@@ -17,22 +17,33 @@ class Replace
 			"server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}"),
 			"text"   => /#{search}/
 		}).limit(30).sort({"time" => -1})	
+    prefixes = [
+      ['q', '~'],
+      ['a', '&'],
+      ['o', '@'],
+      ['h', '%'],
+      ['+', 'v']
+    ]
 		out = ""
-		puts "searching for re"
-		p /#{search}/
-		p replace
+		debug "rcvd regex: s/#{search}/#{replace}"
 		if(res.count > 0) 
-			puts "got res"
-			p res
-			row = res.to_a.find { |x| !x[:text].match /^s\// }
-			str = ""
-			out << "<#{row[:user]}>" << ": "
+      debug "got result: #{res.inspect}"
+      row = res.to_a.detect { |x| !x[:text].match /^s\// }
+      user = row[:user]
+      users = m.channel.users.to_a
+      userModes = users.detect { |usr| usr[0].nick == user }[1]
+      sel = prefixes.detect { |prefix| userModes.detect { |mode| mode == prefix[0] } }
+      prefix = sel.nil? ? "" : sel[1]
+      puts "detected user: #{user}"
+      puts "detected modes: #{userModes.join(', ')}"
+      puts "detected prefix: #{prefix}"
+			out << "<#{prefix}#{row[:user]}>" << ": "
+      method = :sub
+      args = [/#{search}/, replace]
 			if(global != nil)
-				str = row[:text].gsub(/#{search}/, replace)
-			else
-				str = row[:text].sub(/#{search}/, replace)
+        method = :gsub
 			end
-			out << str
+      out << row['text'].method(method).call(*args)
 			m.reply(out)
 		end
 	end

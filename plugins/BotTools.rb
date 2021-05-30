@@ -51,6 +51,7 @@ class BotTools
   end
 
   def stay(m, chan)
+    debug "request to joinstay chan #{chan}"
     chan = "##{chan}" if !chan.match(/^#/)
     bot = m.bot
     response = "#{m.user.nick}: "
@@ -61,7 +62,9 @@ class BotTools
         response << "bruh im already autojoining there anyway. wtf lol"
       else 
         response <<  "adding #{chan} to autojoin...."
-        Util::Util.addautojoin(chan,bot)
+        server = Util::Util.instance.hton(bot)
+        debug "adding #{chan} to autojoin, server: #{server}"
+        Util::Util.instance.addautojoin(server,chan)
         response << "\n and joining #{chan} now..."
         bot.join(chan)
       end

@@ -1,8 +1,9 @@
 require 'pathname'
 require 'cinch'
 require_relative "Hooks.rb" 
+require_relative "Meta.rb" 
 
-module Util 
+module Util #utilities and such 
   class Util
     require 'mongo';
     include Mongo;
@@ -92,11 +93,12 @@ module Util
     end
 
     def addautojoin(server,chan)
+      server = self.hton(server) if !server.is_a? String
       chans = self.getCollection("chans","channels")
-      chans.insert({
+      chans.insert_one({
+        'channel' => chan,
+        'server'  => server,
         'autojoin' => true,
-        'channnel' => chan,
-        'server'  => server
       })
     end
 
@@ -259,6 +261,40 @@ module Util
       @bot.stop
     end
   end
+  module PasteMaker
+    @map = {
+      post: 'code',
+      title: 'name',
+      raw: "raw",
+      expire: "expire_date",
+      format: "format",
+    }  
+    @opts = {
+      "api_paste_expire_date" => "1H",
+      "api_paste_format" => "text", 
+      "api_paste_name" => "tcpbot paste",
+      'api_paste_rawi' => "",
+    }
+
+    def paste(opts) 
+      _opts = @opts
+      if(opts[:post].nil?)
+        return nil
+      end
+      if(opts.is_a? String)
+        opts = { post: opts }
+      end 
+      opts.each do |k,v|
+        _opts["api_paste_"+@map[k]] = v
+      end
+      puts "options rcvd for paste: #{_opts.inspect}"
+      pb = Pastebin.new(_opts)
+      link = pb.paste
+      puts "got pb link: #{link}"
+      return link
+    end
+  end
+
   module PluginHelper
     @@commands = Hash.new
     @@levelRequired = 0

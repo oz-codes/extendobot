@@ -8,12 +8,12 @@ class URLThief
   include Util::PluginHelper
   listen_to :channel
   set :prefix, /^:/
-  @clist = %w{url.rand}
+  @clist = %w{url.rand url.find}
   @@commands["url.rand"] = ":url.rand - spit out a random url from the url db"
   match /url\.rand/, method: :url_rand
-  #@clist.push('url.find')
-  #@@commands "url.find" = ":url.find /regex/ - search through url list to find any matching urls?!!?"
-  #match /url\.find \/(.+?)\//, method: :url_find
+  @clist.push('url.find')
+  @@commands["url.find"] = ":url.find </regex/> - search through url list to find any matching urls?!!?"
+  match /url\.find \/(.+?)\//, method: :url_find
 
 
   def url_find(m, regex) 
@@ -23,7 +23,7 @@ class URLThief
     }).to_a
     resp = "#{m.user.nick}: "
     if(res.empty?)
-      resp << Util::Util.instance.getExcuse() << " (couldn't find anything matching /#{}regex}/)"
+      resp << Util::Util.instance.getExcuse() << " (couldn't find anything matching /#{regex}/)"
     else 
       resp << "here is what i found for /#{regex}/:\n" << res.map {|e| e['url'] }.join(" | ")
     end
@@ -64,7 +64,7 @@ class URLThief
 
   def listen(m)
     text = m.message
-    user = m.user.nick
+    #user = m.user.nick
     #return if (["sayok","g1mp","van","durnkb0t", "[0]"].include? user)
 
     return if m.message.match /^:/

@@ -26,7 +26,7 @@ class Replace
 			p res
 			row = res.to_a.find { |x| !x[:text].match /^s\// }
 			str = ""
-			out << row[:user] << ": "
+			out << "<#{row[:user]}>" << ": "
 			if(global != nil)
 				str = row[:text].gsub(/#{search}/, replace)
 			else

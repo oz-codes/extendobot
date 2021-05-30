@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-#
+
 require 'cinch'
 require_relative './classes/Util'
 
@@ -7,16 +7,16 @@ utils = Util::Util.new;
 bots = Util::BotFamily.instance
 servers = utils.getServers()
 servers.each { |serv| 
-	if serv['autoconnect']
-		bots.add( {
-			"host" => serv['host'],
-			"name" => serv['name']
-			}
-		) 
-		puts "autoconnect to #{serv['name']}"
-	else 
-		puts "ignoring #{serv['name']}"
-	end
+  if serv['autoconnect']
+    bots.add( {
+      "host" => serv['host'],
+      "name" => serv['name']
+    }
+            ) 
+    puts "autoconnect to #{serv['name']}"
+  else 
+    puts "ignoring #{serv['name']}"
+  end
 }	
 bots.startAll
 utils.MainLoop

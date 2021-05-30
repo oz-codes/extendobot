@@ -21,7 +21,7 @@ class Markovian
         return if m.message.match /^:/
         text = m.message
         user = m.user.nick
-        if(!["g1mp","van","durnkb0t"].include? user) 
+        if(!(["sayok","g1mp","van","durnkb0t", "[0]"].include? user)) 
             process(text,user)
         end
     end
@@ -30,8 +30,13 @@ class Markovian
 		#puts "Markovian\n\t#{user}: #{text}"
 		mkv = Markovin8or.new(2)
 		db = Util::Util.instance.getCollection("markov","ngrams") 
+
 		re = /[^a-z0-9' ]/i
-		text = text.gsub(re, " ").gsub(/ {2,}/, " ")	
+        [
+          [URI.regexp, ''], 
+          [re, ' '],
+          [/ {2,}/, ' ']
+        ].each { |args| text = text.gsub *args }
 		puts "text: #{text}"	
 		chains = mkv.chain(text)	
 		mkvs = mkv.mongoize	

@@ -12,3 +12,4 @@ gem "shellwords"
 gem 'nokogiri'
 gem 'fmylife'
 gem 'prime'
+gem 'pastebinrb'

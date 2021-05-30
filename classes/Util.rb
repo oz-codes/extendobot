@@ -263,35 +263,48 @@ module Util #utilities and such
   end
   module PasteMaker
     require "pastebin"
-    @map = {
+    require "tempfile"
+    @@map = {
       post: 'code',
       title: 'name',
       raw: "raw",
       expire: "expire_date",
       format: "format",
     }  
-    @opts = {
+    @@opts = {
       "api_paste_expire_date" => "1H",
       "api_paste_format" => "text", 
       "api_paste_name" => "tcpbot paste",
-      'api_paste_rawi' => "",
+      'api_paste_raw' => "",
     }
 
     def paste(opts) 
-      _opts = @opts
+        puts "IN PASTE LOL"
+        puts "@@MAP: #{@@map.inspect}"
+        puts "@@OPTS: #{@@opts.inspect}"
+        puts "opts: #{opts.inspect}"
+        _opts = @@opts.clone
+      puts "_opts: #{_opts}"
       if(opts[:post].nil?)
+          puts "whoops NO POST CYA!!!"
         return nil
       end
       if(opts.is_a? String)
+          puts "opts came as a string; treating as post"
         opts = { post: opts }
       end 
+      datafile = Tempfile.new("Pasty")
+      datafile.write(opts[:post])
+      opts[:post] = datafile.path
       opts.each do |k,v|
-        _opts["api_paste_"+@map[k]] = v
+        _opts["api_paste_"+@@map[k]] = v
       end
       puts "options rcvd for paste: #{_opts.inspect}"
       pb = Pastebin.new(_opts)
       link = pb.paste
       puts "got pb link: #{link}"
+      datafile.close
+      datafile.unlink
       return link
     end
   end

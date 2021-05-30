@@ -41,55 +41,40 @@ class PlugTool
             ret
         }.reject(&:nil?)
         puts "making the ultimate outcome #{plugs.inspect}"
-=begin      
-keeping this around for posterity...
-and as a reminder of how stupid i can be.
-
-		msg = ''
-        plugs.sort.to_h.
-          each { |k, v|
-			case opt
-				when :all
-					debug "all plugs pls"
-					msg += "#{k} "
-				when :disabled
-					debug "only disabled pls"
-					msg += "#{k} " if !v
-				when :enabled
-					debug "only enabled pls"
-					msg += "#{k} " if v
-				end
-		}
-=end
         m.reply(plugs.sort.join(" "))
 	end
 	def pluginfo(m, modname = nil)
-		cmds = ""
+        bot = m.bot #how dumb am i lol
+		cmds = [] 
+        kc = nil
+        response = ""
         if(!modname.nil?)
-			debug "getting pluginfo for  #{modname}"
 			modname.strip!
-			if(File.exist?("./plugins/#{modname}.rb")) 
-              debug "looky here, plugins/#{modname}.rb does exist!"
-				
-              #ibot = Util::BotFamily.instance.get(Util::Util.instance.hton(Util::Util.buildHost(m.bot)#{m.bot.config.server}:#{m.bot.config.port}")).bot
-              #should be able to just do....
-              ibot = m.bot #how dumb am i lol
-				kc = Kernel.const_get(modname)
-				i = ibot.plugins.find_index { |x| x.class == kc }
+			if(File.exist?("plugins/#{modname}.rb")) 
+                begin
+                    kc = Kernel.const_get(modname)
+                rescue Exception => e
+                    puts "some sort of really weird shit happened here: #{e}"
+                    m.reply "WHAT THE FUCK DID YOU DO: #{e}"
+                    return
+                end
+                puts "goin for thqt I!!!"
+				i = bot.plugins.detect { |x| x.class == kc }
 				if(i == nil) 
 					m.reply("#{modname} not loaded currently: " + Util::Util.instance.getExcuse()) 
 				else 
-                    debug "grabbing @clist for #{kc}"
-					cmds = kc.class_eval { @clist }
-					
+                    puts "evaluating #{i}..."
+                    cmds = i.class.class_eval { puts "inside of #{i} trying to get @ @clist which is #{@clist} btw";  @clist }
+                    cmds = cmds.map{ |cmd| [cmd, nil] }
 				end
 			end
 		else  
 			debug "no MODULE lol"
-			cmds = self.class.class_eval { @@commands }
+            cmds = self.class.class_eval { puts "trying to get #{@@commands} for #{self.class}"; @@commands }
         end
-        m.reply sprintf("%s%s", modname.nil? ? "" : "Commands for #{modname}: ", cmds.sort.map(&:shift).join(" "))
-        m.reply "(btw, my prefix for commands is :)"
+        puts "cmds: #{cmds}"
+        m.reply sprintf("%s%s", modname.nil? ? "" : "Commands for #{modname}: ", cmds.map(&:shift).sort.join(", "))
+        m.reply "(btw, my prefix for commands is %s)" % [Format(:red, :italic, :underline,  ":command")]
 	end		
 end
 		

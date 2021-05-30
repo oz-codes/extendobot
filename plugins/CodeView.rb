@@ -1,7 +1,7 @@
 require 'cinch'
 require 'open-uri'
 require_relative '../classes/Util.rb'
-class Pastebin
+class CodeView
 	include Cinch::Plugin
 	include Hooks::ACLHook
 	include Util::PluginHelper
@@ -12,17 +12,17 @@ class Pastebin
 	match /paste ([a-zA-Z][a-zA-Z0-9]+)/, method: :pastebin;
 	
 	def pastebin(m, modname) 
-		aclcheck(m)
+        response = "#{m.user.nick}: "
 		if(!aclcheck(m)) 
-			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
-			return
+		    response << "your access level is not high enough for this command."
 		end
 		path = "./plugins/#{modname}.rb"
 		if(File.exist?(path)) 
-          m.reply IO.popen("pastebin -f #{path} -l ruby -n '#{modname} src'").readlines.pop
+          response <<  IO.popen("pastebin -f #{path} -l ruby -n '#{modname} src'").readlines.pop
 		 else 
-			m.reply("#{modname} not found...")
+			response << "#{modname} not found..."
 		end
+        m.reply response
 	end
 end
 

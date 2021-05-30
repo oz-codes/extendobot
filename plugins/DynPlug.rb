@@ -6,20 +6,21 @@ class DynPlug
 	include Hooks::ACLHook
 	include Util::PluginHelper
 	set :prefix, /^:/
-	@clist = %w{dynload reload unload load}
+	@clist = %w{dynload reload unload load coreload}
 	@@commands["dynload"] = ":dynload <plugname> <url> - dynamically load a plugin from <url> using <plugname> as plugin name"
 	@@commands["reload"] = ":reload <plugname> - reload plugin source"
 	@@commands["unload"] = ":unload <plugname> - unload plugin source"
 	@@commands["load"] = ":load <plugname> - load plugin source"
+    @@commands["coreload"] = ":coreload - reload core class files"
 	@@levelRequired = 10
 	match /dynload ([a-zA-Z][a-zA-Z0-9]+) (.+)/, method: :dynload;
 	match /reload ([a-zA-Z][a-zA-Z0-9]+)/, method: :reload;
 	match /unload ([a-zA-Z][a-zA-Z0-9]+)/, method: :unload;
 	match /load ([a-zA-Z][a-zA-Z0-9]+)/, method: :mload;
+    match /coreload/, method: :coreload
 	
 	
 	def dynload(m, modname, url) 
-		aclcheck(m)
 		if(!aclcheck(m)) 
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
@@ -53,7 +54,6 @@ class DynPlug
 	end
 
 	def reload(m, modname) 
-		aclcheck(m)
 		if(!aclcheck(m)) 
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
@@ -62,7 +62,6 @@ class DynPlug
 			mload(m, modname)
 	end
 	def unload(m, modname) 
-		aclcheck(m)
 		if(!aclcheck(m)) 
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
@@ -83,7 +82,6 @@ class DynPlug
 	end
 
 	def mload(m, modname) 
-		aclcheck(m)
 		if(!aclcheck(m)) 
 			m.reply("#{m.user.nick}: your access level is not high enough for this command.")
 			return
@@ -108,6 +106,33 @@ class DynPlug
 			m.reply("#{modname} not found...")
 		end
 	end
+
+    def coreload(m)
+        response = "#{m.user.nick}: "
+        if(!aclcheck(m)) 
+            response << "your access level is not high enough for this command."
+        else
+            response << "Loading...\n"
+            cores = Dir.glob("*.rb", base: "classes/")
+            total = cores.length
+            count = 0
+            msg = []
+            cores.each { |core|
+                begin
+                    load "classes/#{core}"
+                    msg.push("#{core} loaded successfully!")
+                    count += 1
+                rescue Exception => e
+                    msg.push " failed to reload: #{e}"
+                end
+            }
+            response << msg.join(" // ") << "\n#{count}/#{total} core files reloaded."
+        end
+        m.reply response
+    end
+            
+
+
 
 
 end

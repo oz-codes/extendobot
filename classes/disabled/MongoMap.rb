@@ -1,6 +1,6 @@
 require 'pathname'
 require 'cinch'
-require "cinch/plugins/identify"
+#require "cinch/plugins/identify"
 require "mongo"
 require "mongo_mapper"
 require_relative "Hooks.rb"	

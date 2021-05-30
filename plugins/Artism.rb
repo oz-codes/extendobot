@@ -28,18 +28,14 @@ class Artism
     match(/art.random/ , method: :artspew)
 
     timer 30.minutes, method: :gather_files 
-
+    timer 2.seconds, method: :gather_files, shots: 1
     #@@commands["art.web"] = "art.web <url> - grab an ANSI file from the internet at <url>, convert it, and play it."
     #@clist.push "art.web"
     #match /art.web  (#{@urirxp})/, method: :arternets
 
-    def initialize(*args)
-        super
-
-        gather_files()
-    end
     def gather_files() 
         @files = Dir.glob("*", base: @dir)
+        puts "sexy files #{@files.length}"
     end
     def play_art(m, art)
         response = ""

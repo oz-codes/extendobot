@@ -1,8 +1,9 @@
 class Integer
+    @accumulator = 1
   def self._(arg)
-    @val ||= 1
+    @accumulator ||= 1
     
-    @val *= arg
+    @accumulator *= arg
   end
   
   { 
@@ -17,7 +18,7 @@ class Integer
       
       alias_method plural, method
     }
-  @val = 1.0
+  @accumulator = 1.0
   {
     #[ :yb , :yoctobyte ]  =>  _(  1024**3 ), 
     #[ :zb , :zeptobyte ]  =>  _(  1024**3 ),
@@ -39,12 +40,13 @@ class Integer
   }.each { |methods, mult|
     short, long = methods
     plural = (long.to_s.concat("s")).to_sym
-    
+    lower = short.to_s.downcase.to_sym 
     define_method long do
       self*mult
     end
     alias_method short , long
     alias_method plural, long
+    alias_method lower,  short
   }
 end
 

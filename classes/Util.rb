@@ -262,6 +262,7 @@ module Util #utilities and such
     end
   end
   module PasteMaker
+    require "pastebin"
     @map = {
       post: 'code',
       title: 'name',

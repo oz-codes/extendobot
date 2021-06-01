@@ -124,7 +124,7 @@ class Markovian
 		if(words == nil)
 			words = (4+rand(24).to_i)
 		end
-		words = words > 32 ? 32 : words
+		words = words > 1024 ? 1024 : words
 		#puts "begin markov chainsaw"
 		#puts "start.count: #{words}, start.seed: #{seed}"
 		if seed != nil

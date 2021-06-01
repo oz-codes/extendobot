@@ -17,7 +17,7 @@ class Circumstantial
 	match /github$/, method: :github
 
 	def github (m)
-		m.reply "http://github.com/oz-codes/extendobot"
+		m.reply "http://github.com/oz-codes/extendobot/tree/tcpbot"
 	end
 
 	def excuse (m)

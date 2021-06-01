@@ -1,5 +1,6 @@
 require 'pathname'
 require 'cinch'
+require 'pastebinrb'
 require_relative "Hooks.rb" 
 require_relative "Meta.rb" 
 
@@ -8,6 +9,10 @@ module Util #utilities and such
     require 'mongo';
     include Mongo;
     Mongo::Logger.logger.level = ::Logger::FATAL
+    def self.pb()
+        @pb ||= Pastebinrb::Pastebin.new 'ce1ac130ad6810a535f893df0647b6c9'
+        return @pb
+    end
     def getExcuse 
       puts "trying to get an excuse.... excuses count: #{@@excuses.count}"
       if(@@excuses.count <= 0) 
@@ -262,49 +267,30 @@ module Util #utilities and such
     end
   end
   module PasteMaker
-    require "pastebin"
-    require "tempfile"
-    @@map = {
-      post: 'code',
-      title: 'name',
-      raw: "raw",
-      expire: "expire_date",
-      format: "format",
-    }  
-    @@opts = {
-      "api_paste_expire_date" => "1H",
-      "api_paste_format" => "text", 
-      "api_paste_name" => "tcpbot paste",
-      'api_paste_raw' => "",
-    }
+    #@@map = {
+    #  post: 'code',
+    #  title: 'name',
+    #  raw: "raw",
+    #  expire: "expire_date",
+    #  format: "format",
+    #}  
+    #@@opts = {
+    #  "api_paste_expire_date" => "1H",
+    #  "api_paste_format" => "text", 
+    #  "api_paste_name" => "tcpbot paste",
+    #  'api_paste_raw' => "",
+    #}
 
-    def paste(opts) 
-        puts "IN PASTE LOL"
-        puts "@@MAP: #{@@map.inspect}"
-        puts "@@OPTS: #{@@opts.inspect}"
-        puts "opts: #{opts.inspect}"
-        _opts = @@opts.clone
-      puts "_opts: #{_opts}"
-      if(opts[:post].nil?)
-          puts "whoops NO POST CYA!!!"
-        return nil
-      end
-      if(opts.is_a? String)
-          puts "opts came as a string; treating as post"
-        opts = { post: opts }
-      end 
-      datafile = Tempfile.new("Pasty")
-      datafile.write(opts[:post])
-      opts[:post] = datafile.path
-      opts.each do |k,v|
-        _opts["api_paste_"+@@map[k]] = v
-      end
-      puts "options rcvd for paste: #{_opts.inspect}"
-      pb = Pastebin.new(_opts)
-      link = pb.paste
+    def paste(post, title=nil, language=nil)
+      pb = Util.pb
+      title ||= ""
+      language ||= "text"
+      link = pb.paste_content(
+          post,
+          title: title,
+          format: language
+      )
       puts "got pb link: #{link}"
-      datafile.close
-      datafile.unlink
       return link
     end
   end

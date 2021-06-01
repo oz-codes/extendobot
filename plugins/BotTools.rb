@@ -11,9 +11,9 @@ class BotTools
   @@commands["part"] = ":part <channel> - part channel"
   @@commands["stay"] = ":stay <channel> - join channel, and add it to autojoin for future sessions"
   @@levelRequired = 10
-  match(/join (#.+)/ , method: :join)
-  match(/part (#.+)/ , method: :part)
-  match(/stay (#.+)/ , method: :stay)
+  match(/join (#?.+)/ , method: :join)
+  match(/part (#?.+)/ , method: :part)
+  match(/stay (#?.+)/ , method: :stay)
 
   def join(m, chan)
     chan = "##{chan}" if !chan.match(/^#/)

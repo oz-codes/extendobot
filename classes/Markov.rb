@@ -26,7 +26,7 @@ class Markovin8or
 		end
 		#puts "markovin #{text}"		
 		chains = []
-		contents = text
+        contents = text.downcase
 		words = contents.strip.split(/ /)
 		for idx in 0..words.count #loop through words
 			tail = []

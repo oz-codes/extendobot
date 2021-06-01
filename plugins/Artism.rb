@@ -2,7 +2,7 @@ require 'cinch'
 require 'open-uri'
 require 'ansirc'
 require 'uri'
-require 'pastebin'
+require 'pastebinrb'
 require "prime"
 
 
@@ -52,7 +52,7 @@ class Artism
             exc = Util::Util.instance.getExcuse()
             response << "#{m.user.nick}: #{exc} (#{art} does not appear to EXIST smfh lern2type)"
         else 
-            response << "%s %s" % [Format(:red, "Now playing: "), Format(:red, :bold, path)]
+            response << "%s %s\n" % [Format(:red, "Now playing: "), Format(:red, :bold, path)]
             response << File.open(path) { |file|
                 file.read
             }
@@ -63,23 +63,19 @@ class Artism
     def artlist(m, *args)
         regex, target, cs = args
         response = "#{m.user.nick}: "
-        puts " I GRAB MUH NUT IN DA ART LIST"
-        3.times do puts "!!!!!!!!!!!!!!!!!!" end
-        puts "args: #{args}"
-        puts "regex: #{regex}, target: #{target}. cs: #{cs}"
         list = []
+        link = ""
         if(regex.nil?) #no regex provided loil
-            puts "ig dey want all da smoke"
             list = @files #just get em ALL TOGETHER
         else  #oh we have a regex i see
             sluice = cs.nil? ? /#{target}/ : /#{target}/i
-            puts "sluice = #{sluice}"
             list = @files.select { |file| file.match(sluice) }
-            puts "ok list length = #{list.length}"
         end
         if(list.length > 20) 
             puts "building pastebin thingy..."
-            title = "ANSI Art List (#{regex})"
+            title = "ANSI Art List"
+            title << " (#{regex})" if !regex.nil?
+
             factors = Prime.prime_division(list.length)
             count, power = factors.detect { |f| f[1] == 1 && f[0] > 2 }
             puts power
@@ -89,6 +85,8 @@ class Artism
             code = chunks.map { |chunk|
                 chunk.join(" ")
             }.join("\n")
+            pb = Util::Util.pb
+
             puts "gonna paste this list; info first"
             puts "title: #{title}"
             puts "list length: #{list.length}"
@@ -96,24 +94,20 @@ class Artism
             puts "ultimate count: #{count}"
             puts "chunks: #{chunks.inspect}"
             puts" && code to paste: #{code}"
-            response << "#{list.length} results were found; please visit:"
             begin  
-                response << "\n" << paste({
-                    title: title,
-                    post: code
-                }) << " to see the full list"
+                link = paste(code, title)
             rescue Exception => ex
                 response << "SOMETHING MESSED UP: #{ex}"
+                return
             end
-            #gonna have to experiment first lol
+            response << "#{list.length} results were found; please visit "
+            response << link  << " to see the full list"
         else 
-            puts "less than 20 results found yo: #{list.length}"
             response << "here are the #{list.length} result(s) found.\n" <<  list.join(", ")
         end
-        puts "ultimate response: #{response}"
-        #m.reply response
+        m.reply response
     end
-    def artspew(m, cmd)
+    def artspew(m)
         play_art(m,@files.sample)
     end
 

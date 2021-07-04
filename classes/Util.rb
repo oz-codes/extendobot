@@ -1,3 +1,5 @@
+
+
 require 'pathname'
 require 'cinch'
 require 'pastebinrb'
@@ -210,8 +212,12 @@ module Util #utilities and such
           name = mong.hton(host)
           c.server_queue_size = 512
           c.messages_per_second = 64
-          c.nick = conf.find({ 'key' => 'nick', 'server' => name }).to_a[0]["val"] 
-          c.user = "datbot"
+          puts "gotta find thgat nick for #{name} in da game mayne"
+          q = conf.find({ 'key' => 'nick', 'server' => name })#.to_a[0]["val"] 
+          puts "here is a thing: #{q.inspect}"
+          exit
+          c.user = "botholejones"
+          c.nick 
           c.realname = "O Shid It Dat Bot!"
           passwd = nil 
           pass = conf.find({ 'key' => 'pass', 'server' => name })

@@ -15,6 +15,6 @@ gem 'prime'
 gem 'pastebinrb'
 gem 'ascii-image'
 gem 'rmagick' 
-#gem 'mongo' #lol this one is actually really fucking important js
+gem 'mongo' #lol this one is actually really fucking important js
 gem 'extralite' #sqlitle never wants to instawall
 

@@ -1,7 +1,8 @@
-
+#!/usr/bin/env ruby
 
 require 'pathname'
 require 'cinch'
+require "json"
 require 'pastebinrb'
 require_relative "Hooks.rb" 
 require_relative "Meta.rb" 
@@ -76,12 +77,18 @@ module Util #utilities and such
     def initialize  
       @@excuses = [];
       @@success = [];
-      @@url = "127.0.0.1:27017"
+      config = JSON.parse(
+        File.open("config.json","r") { |f| f.read() }
+      )
+      mUsr = config['username']
+      mPass = config['password']
+      @@url = "mongodb://#{mUsr}:#{mPass}@127.0.0.1:27017
+      "
       @@mongos = {};
-      @@mongos[:chans] = Mongo::Client.new([@@url], :database => "chans")
-      @@mongos[:extendobot] = Mongo::Client.new([@@url], :database => "extendobot")
-      @@mongos[:acl] = Mongo::Client.new([@@url], :database => "acl")
-      @@mongos[:markov] = Mongo::Client.new([@@url], :database => "markov")
+      @@mongos[:chans] = Mongo::Client.new(@@url, :database => "chans")
+      @@mongos[:extendobot] = Mongo::Client.new(@@url, :database => "extendobot")
+      @@mongos[:acl] = Mongo::Client.new(@@url, :database => "acl")
+      @@mongos[:markov] = Mongo::Client.new(@@url, :database => "markov")
     end
     def getDB(dbn)
       db = @@mongos[dbn.to_sym]
@@ -91,7 +98,7 @@ module Util #utilities and such
         return db
       else
         #puts "initializing connection to #{dbn}"
-        p @@mongos[dbn.to_sym] = Mongo::Client.new([@@url], :database => dbn)
+        p @@mongos[dbn.to_sym] = Mongo::Client.new(@@url, :database => dbn)
         return @@mongos[dbn.to_sym]
       end
     end
@@ -213,11 +220,10 @@ module Util #utilities and such
           c.server_queue_size = 512
           c.messages_per_second = 64
           puts "gotta find thgat nick for #{name} in da game mayne"
-          q = conf.find({ 'key' => 'nick', 'server' => name })#.to_a[0]["val"] 
-          puts "here is a thing: #{q.inspect}"
-          exit
+          nickname = conf.find({ 'key' => 'nick', 'server' => name }).to_a[0]["val"]
+          puts "here is a thing: #{nickname}"
           c.user = "botholejones"
-          c.nick 
+          c.nick = nickname 
           c.realname = "O Shid It Dat Bot!"
           passwd = nil 
           pass = conf.find({ 'key' => 'pass', 'server' => name })

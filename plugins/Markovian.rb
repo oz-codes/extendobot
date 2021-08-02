@@ -72,7 +72,7 @@ class Markovian
 	end
 
 	def markov(m,length=nil,seed=nil)
-                out = start(m,seed,length == nil ? length : length.to_i)
+    out = start(m,seed,length == nil ? length : length.to_i)
 		puts "markov out:\n\t#{out}"
 		m.reply(out)
 		
@@ -118,13 +118,13 @@ class Markovian
 		return ret
 	end
 		
-        def start(m, seed=nil, words=nil)
+  def start(m, seed=nil, words=nil)
 		db = Util::Util.instance.getCollection("markov","ngrams") 
 		res = ""
 		if(words == nil)
 			words = (4+rand(24).to_i)
 		end
-		words = words > 1024 ? 1024 : words
+		words = words > 256 ? 256 : words
 		#puts "begin markov chainsaw"
 		#puts "start.count: #{words}, start.seed: #{seed}"
 		if seed != nil

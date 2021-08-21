@@ -250,7 +250,7 @@ module Util #utilities and such
           c.plugins.plugins = pList
           on :"477" do |m|
             puts "477, trying again in 5..."
-            p m               
+            p m.inspect               
             Timer(5, {:shots => 4}) { m.bot.join(m.channel) }
           end
           on :connect do |m|

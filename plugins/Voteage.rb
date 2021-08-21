@@ -8,30 +8,36 @@ class Voteage
 	@@commands["++"] = "(user)++ - upvote user"
 	@@commands["--"] = "(user)-- - downvote user"
 	@@commands["score"] = ":score <user> - get user score"
-	match /score (.+)/, method: :score
+	match(/score (.+)/, method: :score)
 
 	listen_to :channel
-	
+
 	def listen(m)
 		if(match = /(.+)(\+\+|--)/.match(m.message))
 			db = Util::Util.instance.getCollection("extendobot","votes")
 			val = 0
 			case match[2]
-				when "++"
-					val = 1
-				when "--"
-					val = -1
+			when "++"
+				val = 1
+			when "--"
+				val = -1
+			end
+			user = match[1]
+			users = m.channel.users.to_a
+			modeList = users.detect { |usr| usr[0].nick == user } 
+			if(modeList.nil?) 
+				return
 			end
 			db.insert_one({
-				"user" => match[1], 
+				"user" => user,
 				"server" => Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}"),
 				"voter" => m.user.nick,
 				"value" => val
 			})
 		end
 	end
-	
-	def score (m, user)
+
+	def score(m, user)
 		user.strip!
 		score = 0
 		db = Util::Util.instance.getCollection("extendobot","votes")
@@ -51,5 +57,5 @@ class Voteage
 		m.reply "#{user} total score: #{score}"
 	end
 end
-		
-	
+
+

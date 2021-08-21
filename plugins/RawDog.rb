@@ -1,7 +1,7 @@
 require 'cinch'
 require 'open-uri'
 require_relative '../classes/Util.rb'
-class RawCmd
+class RawDog
   include Cinch::Plugin
   include Hooks::ACLHook
   include Util::PluginHelper

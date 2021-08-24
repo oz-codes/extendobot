@@ -13,8 +13,8 @@ module Util #utilities and such
     include Mongo;
     Mongo::Logger.logger.level = ::Logger::FATAL
     def self.pb()
-        @pb ||= Pastebinrb::Pastebin.new 'ce1ac130ad6810a535f893df0647b6c9'
-        return @pb
+      @pb ||= Pastebinrb::Pastebin.new 'ce1ac130ad6810a535f893df0647b6c9'
+      return @pb
     end
     def getExcuse 
       puts "trying to get an excuse.... excuses count: #{@@excuses.count}"
@@ -82,23 +82,21 @@ module Util #utilities and such
       )
       mUsr = config['username']
       mPass = config['password']
-      @@url = "mongodb://#{mUsr}:#{mPass}@127.0.0.1:27017
-      "
+      @@url = "mongodb://#{mUsr}:#{mPass}@127.0.0.1:27017"
+
+      @@baseMongo = Mongo::Client.new(@@url, :max_pool_size => 50, :database => 'extendobot')
       @@mongos = {};
-      @@mongos[:chans] = Mongo::Client.new(@@url, :database => "chans")
-      @@mongos[:extendobot] = Mongo::Client.new(@@url, :database => "extendobot")
-      @@mongos[:acl] = Mongo::Client.new(@@url, :database => "acl")
-      @@mongos[:markov] = Mongo::Client.new(@@url, :database => "markov")
+      @@mongos[:chans] = @@baseMongo.use("chans")
+      @@mongos[:extendobot] = @@baseMongo.use("extendobot")
+      @@mongos[:acl] = @@baseMongo.use("acl")
+      @@mongos[:markov] = @@baseMongo.use("markov")
     end
     def getDB(dbn)
       db = @@mongos[dbn.to_sym]
       if(db)
-        #puts "#{dbn} exists"
-        p db
         return db
       else
-        #puts "initializing connection to #{dbn}"
-        p @@mongos[dbn.to_sym] = Mongo::Client.new(@@url, :database => dbn)
+        @@mongos[dbn.to_sym] = @@baseMongo.use(dbn)
         return @@mongos[dbn.to_sym]
       end
     end
@@ -217,8 +215,8 @@ module Util #utilities and such
           mong       = Util.instance
           conf       = mong.getCollection("extendobot","config");
           name = mong.hton(host)
-          c.server_queue_size = 512
-          c.messages_per_second = 64
+          c.server_queue_size = 4096
+          c.messages_per_second = 512
           puts "gotta find thgat nick for #{name} in da game mayne"
           nickname = conf.find({ 'key' => 'nick', 'server' => name }).to_a[0]["val"]
           puts "here is a thing: #{nickname}"
@@ -298,9 +296,9 @@ module Util #utilities and such
       title ||= ""
       language ||= "text"
       link = pb.paste_content(
-          post,
-          title: title,
-          format: language
+        post,
+        title: title,
+        format: language
       )
       puts "got pb link: #{link}"
       return link

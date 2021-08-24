@@ -1,0 +1,199 @@
+ 14,14LOLDONGSLOLDONGSLOLDONGS# 15,15# 14,14LOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLD
+ONGSLOLDONGS#                                                                   
+ 14,14LOLDONGSLOLDONGSLOLDONGS##### 1,1# 14,14LOLDONGSLOLDONGSLOLDONGSLOLDONGSLO
+LDONGS#####                                                                     
+ 14,14LOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGS##
+#                                                                               
+ 14,14LOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGS## 1,1## 14,14LOLDONGSLOLDONGSLOLD
+ONGS#######                                                                     
+ 14,14LOLDONGSLOLDONGSLOLDONGS# 1,1#### 14,14###### 15,15# 14,14LOLDONGS## 1,1##
+# 14,14LOLDONGSLOLDONGSLOLDONGS##                                               
+ 14,14LOLDONGSLOLDONGSLOLDONGS 1,1## 14,14## 1,1### 14,14LOLDONGSLOLDONGSLOLDONG
+SLOLDONGSLOLDONGS####                                                           
+ 14,14LOLDONGSLOLDONGS###### 1,1####### 14,14LOLDONGSLOLDONGSLOLDONGSLOLDONGSLOL
+DONGS######                                                                     
+ 14,14LOLDONGSLOLDONGS###### 1,1# 14,14# 1,1LOLDONGS# 14,14LOLDONGS# 1,1### 14,1
+4LOLDONGSLOLDONGSLOLDONGS######                                                 
+ 14,14LOLDONGSLOLDONGS 1,1####### 14,14# 1,1##### 14,14LOLDONGS####### 1,1# 14,1
+4LOLDONGSLOLDONGSLOLDONGS######                                                 
+ 14,14LOLDONGS###### 1,1LOLDONGS###### 14,14## 1,1# 14,14## 1,1##### 14,14### 1,
+1## 14,14LOLDONGSLOLDONGS 1,1## 14,14LOLDONGS######                             
+ 14,14LOLDONGS##### 1,1LOLDONGS### 14,14# 1,1# 14,14###### 1,1## 14,14LOLDONGS# 
+1,1# 14,14###### 1,1# 14,14LOLDONGS## 1,1# 14,14LOLDONGS#####                   
+ 14,14LOLDONGS#### 1,1LOLDONGS#### 14,14# 1,1### 14,14LOLDONGSLOLDONGSLOLDONGSLO
+LDONGS# 1,1## 14,14LOLDONGS####                                                 
+ 14,14LOLDONGS### 1,1LOLDONGS##### 14,14LOLDONGS# 5,5### 14,14### 5,5#### 14,14L
+OLDONGSLOLDONGS### 1,1## 14,14LOLDONGS###                                       
+ 14,14LOLDONGS### 1,1# 14,14# 1,1LOLDONGS 14,14####### 5,5LOLDONGS### 14,14# 5,5
+# 14,14# 5,5###### 14,14####### 5,5# 14,14###### 5,5### 14,14LOLDONGS##         
+ 14,14LOLDONGS###### 1,1#### 14,14#### 1,1# 14,14##### 5,5### 7,7# 14,14# 5,5LOL
+DONGS####### 14,14### 7,7### 14,14# 7,7##### 5,5# 14,14## 5,5## 14,14LOLDONGS## 
+ 14,14LOLDONGS##### 1,1###### 14,14LOLDONGS 5,5#### 7,7LOLDONGSLOLDONGS###### 15
+,15## 7,7LOLDONGS 5,5### 14,14LOLDONGS#                                         
+ 14,14LOLDONGS## 1,1LOLDONGS 14,14####### 5,5###### 7,7LOLDONGSLOLDONGS#### 15,1
+5#### 7,7LOLDONGS# 5,5## 14,14LOLDONGS#                                         
+ 14,14LOLDONGS# 1,1LOLDONGS 14,14LOLDONGS# 7,7# 5,5### 7,7LOLDONGSLOLDONGS## 15,
+15##### 7,7LOLDONGS### 5,5## 14,14### 1,1# 14,14#####                           
+ 14,14LOLDONGS### 1,1##### 14,14## 1,1# 14,14###### 7,7## 5,5## 7,7LOLDONGSLOLDO
+NGS## 15,15##### 7,7LOLDONGS##### 5,5## 14,14### 1,1# 14,14####                 
+ 14,14LOLDONGS# 1,1LOLDONGS 14,14LOLDONGS 7,7LOLDONGSLOLDONGS###### 15,15## 7,7#
+ 15,15### 7,7LOLDONGS#### 5,5## 14,14LOLDONGS                                   
+ 14,14LOLDONGS# 1,1#### 14,14# 1,1# 14,14LOLDONGS# 5,5# 7,7### 5,5# 7,7LOLDONGSL
+OLDONGSLOLDONGSLOLDONGS#### 15,15# 5,5## 14,14# 5,5# 1,1## 14,14###             
+ 14,14LOLDONGS# 1,1#### 14,14LOLDONGS### 5,5# 7,7LOLDONGSLOLDONGS### 15,15# 7,7L
+OLDONGSLOLDONGS#### 15,15# 5,5## 14,14## 1,1## 14,14###                         
+ 14,14LOLDONGS# 1,1### 14,14LOLDONGS#### 5,5## 7,7LOLDONGSLOLDONGS###### 15,15##
+### 7,7# 15,15### 7,7LOLDONGS# 5,5## 14,14## 1,1# 14,14####                     
+ 14,14LOLDONGS 1,1### 14,14LOLDONGS#### 5,5### 7,7LOLDONGS####### 15,15# 7,7LOLD
+ONGSLOLDONGSLOLDONGS 5,5## 14,14### 1,1# 14,14###                               
+ 14,14LOLDONGS 1,1#### 14,14LOLDONGS### 5,5### 7,7LOLDONGSLOLDONGS### 15,15#### 
+7,7## 15,15## 7,7LOLDONGS##### 5,5## 14,14### 1,1# 14,14###                     
+ 14,14LOLDONGS 1,1### 14,14LOLDONGS#### 5,5## 7,7LOLDONGSLOLDONGS## 15,15# 7,7##
+## 15,15LOLDONGS# 7,7LOLDONGS# 5,5## 14,14### 1,1# 14,14###                     
+ 14,14LOLDONGS 1,1### 14,14LOLDONGS#### 5,5## 7,7# 5,5## 7,7LOLDONGSLOLDONGSLOLD
+ONGSLOLDONGS####### 5,5# 14,14### 1,1## 14,14##                                 
+ 14,14####### 1,1### 14,14LOLDONGS###### 7,7## 5,5# 7,7LOLDONGSLOLDONGS#### 15,1
+5LOLDONGS 7,7LOLDONGS#### 5,5# 14,14#######                                     
+ 14,14####### 1,1# 14,14LOLDONGSLOLDONGS 5,5### 7,7LOLDONGSLOLDONGS### 15,15## 7
+,7###### 15,15### 7,7LOLDONGS## 5,5## 14,14######                               
+ 14,14LOLDONGS 1,1# 14,14LOLDONGS####### 7,7# 5,5## 7,7LOLDONGSLOLDONGS### 15,15
+## 7,7####### 15,15## 7,7LOLDONGS## 5,5## 14,14######                           
+ 14,14####### 1,1## 14,14LOLDONGS####### 7,7# 5,5# 7,7LOLDONGSLOLDONGSLOLDONGSLO
+LDONGSLOLDONGS# 5,5# 14,14#######                                               
+ 14,14####### 1,1### 14,14LOLDONGS###### 5,5### 7,7LOLDONGSLOLDONGSLOLDONGS### 5
+,5## 7,7LOLDONGS### 5,5# 14,14#######                                           
+ 14,14LOLDONGS 1,1## 14,14LOLDONGS##### 7,7# 5,5#### 7,7### 5,5LOLDONGS#### 7,7L
+OLDONGS###### 5,5#### 14,14# 5,5# 7,7### 14,14# 5,5# 14,14### 1,1# 14,14###     
+ 14,14LOLDONGS 1,1## 14,14# 1,1#### 14,14# 1,1# 14,14##### 5,5LOLDONGS 7,7# 5,5L
+OLDONGS 14,14### 5,5## 7,7LOLDONGS##### 5,5####### 14,14#### 5,5# 14,14######   
+ 14,14LOLDONGS 1,1LOLDONGS## 14,14### 5,5LOLDONGSLOLDONGS####### 7,7LOLDONGS####
+ 5,5####### 14,14LOLDONGS####                                                   
+ 14,14LOLDONGS 1,1LOLDONGS## 14,14### 5,5LOLDONGS### 7,7# 5,5## 14,14LOLDONGS 5,
+5### 7,7LOLDONGS# 5,5### 14,14#### 5,5#### 14,14## 5,5# 14,14######             
+ 14,14LOLDONGS 5,5# 1,1LOLDONGS# 14,14#### 5,5###### 7,7##### 15,15# 14,14### 5,
+5# 14,14# 5,5## 14,14## 5,5### 7,7### 15,15# 7,7# 5,5LOLDONGS 14,14# 15,15## 14,
+14###### 5,5# 14,14######                                                       
+ 14,14####### 7,7## 5,5### 1,1###### 14,14#### 7,7# 5,5### 7,7###### 5,5###### 1
+,1## 14,14### 5,5## 7,7#### 15,15# 7,7# 5,5###### 1,1### 14,14##### 5,5# 14,14# 
+15,15# 5,5# 14,14######                                                         
+ 14,14###### 5,5### 7,7# 5,5### 1,1##### 14,14### 5,5# 7,7LOLDONGS# 5,5### 7,7# 
+5,5### 1,1# 14,14### 7,7####### 15,15# 7,7# 5,5### 14,14# 15,15# 5,5## 1,1#### 1
+4,14## 7,7# 5,5# 14,14# 15,15# 5,5## 14,14#####                                 
+ 14,14###### 5,5# 14,14# 5,5##### 1,1#### 14,14### 5,5### 7,7LOLDONGS##### 5,5##
+# 7,7LOLDONGSLOLDONGS 15,15# 5,5### 14,14## 5,5## 7,7#### 15,15# 5,5## 14,14####
+#                                                                               
+ 14,14###### 5,5## 7,7# 5,5##### 1,1# 14,14#### 5,5### 7,7LOLDONGSLOLDONGSLOLDON
+GSLOLDONGS### 5,5# 14,14#### 5,5# 7,7##### 5,5## 14,14#####                     
+ 14,14####### 5,5# 7,7# 5,5LOLDONGS 14,14#### 7,7LOLDONGSLOLDONGSLOLDONGSLOLDONG
+SLOLDONGS####### 5,5## 14,14#####                                               
+ 14,14LOLDONGS 7,7## 5,5####### 14,14### 5,5## 7,7LOLDONGSLOLDONGSLOLDONGSLOLDON
+GS#### 15,15### 7,7#### 15,15# 7,7## 5,5### 14,14####                           
+ 14,14####### 7,7## 5,5LOLDONGS 14,14### 7,7# 5,5# 7,7LOLDONGSLOLDONGSLOLDONGSLO
+LDONGS###### 15,15# 7,7### 15,15# 7,7# 15,15# 7,7# 5,5## 14,14#####             
+ 14,14LOLDONGS 7,7# 5,5## 14,14# 5,5##### 14,14# 5,5### 7,7LOLDONGSLOLDONGSLOLDO
+NGSLOLDONGSLOLDONGS### 15,15# 7,7### 5,5## 14,14#####                           
+ 14,14LOLDONGS 5,5## 7,7## 5,5# 7,7# 5,5### 14,14# 5,5### 7,7# 5,5# 7,7LOLDONGSL
+OLDONGSLOLDONGSLOLDONGS### 15,15## 7,7LOLDONGS 5,5#### 14,14###                 
+ 14,14LOLDONGS 5,5## 7,7## 5,5# 7,7## 5,5LOLDONGS 7,7LOLDONGSLOLDONGSLOLDONGSLOL
+DONGS#### 15,15# 7,7# 15,15# 7,7###### 5,5### 14,14####                         
+ 14,14LOLDONGS# 5,5# 7,7## 5,5# 7,7## 5,5LOLDONGS 7,7LOLDONGS#### 15,15# 7,7LOLD
+ONGSLOLDONGS###### 15,15## 7,7# 15,15# 7,7###### 5,5### 14,14####               
+ 14,14LOLDONGS# 5,5## 7,7# 5,5## 7,7# 5,5LOLDONGS# 7,7LOLDONGS###### 15,15## 7,7
+LOLDONGS## 15,15## 7,7##### 15,15###### 7,7##### 5,5### 14,14####               
+ 14,14LOLDONGS# 7,7## 5,5LOLDONGS#### 7,7LOLDONGS###### 15,15## 7,7## 5,5# 7,7LO
+LDONGS 15,15## 7,7##### 15,15###### 7,7#### 5,5#### 14,14####                   
+ 14,14LOLDONGS# 5,5## 7,7# 5,5##### 14,14## 5,5##### 7,7LOLDONGS##### 15,15# 7,7
+## 5,5## 7,7LOLDONGS 15,15## 7,7###### 15,15#### 7,7##### 5,5#### 14,14####     
+ 14,14LOLDONGS## 5,5# 7,7## 5,5LOLDONGS### 7,7LOLDONGS##### 15,15# 7,7### 5,5# 7
+,7# 5,5##### 7,7##### 5,5# 7,7# 5,5# 7,7### 15,15### 7,7##### 5,5### 14,14##### 
+ 14,14LOLDONGS### 7,7## 5,5LOLDONGS## 7,7LOLDONGSLOLDONGS### 5,5####### 7,7### 5
+,5#### 7,7#### 15,15## 7,7##### 5,5### 14,14#####                               
+ 14,14LOLDONGS### 7,7## 5,5# 7,7# 5,5LOLDONGS# 7,7LOLDONGSLOLDONGS###### 5,5LOLD
+ONGS 7,7###### 15,15## 7,7##### 5,5### 14,14#####                               
+ 14,14LOLDONGS#### 5,5# 7,7## 5,5LOLDONGS 7,7LOLDONGSLOLDONGSLOLDONGS# 5,5# 7,7L
+OLDONGSLOLDONGS## 5,5### 14,14#####                                             
+ 14,14LOLDONGS#### 5,5# 7,7## 5,5LOLDONGS# 7,7LOLDONGSLOLDONGSLOLDONGSLOLDONGSLO
+LDONGS### 5,5## 14,14######                                                     
+ 14,14LOLDONGS##### 5,5LOLDONGS## 7,7LOLDONGSLOLDONGSLOLDONGSLOLDONGSLOLDONGS###
+ 5,5## 14,14#######                                                             
+ 14,14LOLDONGS###### 5,5LOLDONGS## 7,7LOLDONGSLOLDONGSLOLDONGS# 15,15### 7,7LOLD
+ONGS###### 5,5## 14,14#######                                                   
+ 14,14LOLDONGS####### 5,5# 14,14# 5,5###### 7,7LOLDONGSLOLDONGSLOLDONGSLOLDONGSL
+OLDONGS### 5,5## 14,14#######                                                   
+ 14,14LOLDONGS####### 5,5## 14,14# 5,5##### 7,7LOLDONGSLOLDONGSLOLDONGSLOLDONGSL
+OLDONGS### 5,5## 14,14#######                                                   
+ 14,14LOLDONGSLOLDONGS### 5,5#### 7,7LOLDONGSLOLDONGS#### 15,15# 7,7##### 15,15#
+ 7,7## 15,15### 7,7LOLDONGS### 5,5## 14,14#######                               
+ 14,14LOLDONGSLOLDONGS### 5,5##### 7,7LOLDONGS###### 5,5#### 1,1##### 5,5LOLDONG
+S 14,14# 7,7LOLDONGS# 14,14# 5,5# 14,14LOLDONGS                                 
+ 14,14LOLDONGSLOLDONGS### 5,5## 14,14# 5,5## 7,7LOLDONGS###### 5,5LOLDONGS##### 
+1,1## 5,5### 14,14# 7,7###### 5,5# 14,14# 5,5## 14,14LOLDONGS                   
+ 14,14LOLDONGSLOLDONGS 5,5# 14,14#### 5,5#### 7,7LOLDONGSLOLDONGS 5,5# 7,7######
+ 15,15## 5,5####### 7,7###### 5,5#### 14,14LOLDONGS                             
+ 14,14LOLDONGSLOLDONGS## 5,5####### 7,7# 5,5#### 7,7LOLDONGSLOLDONGS###### 5,5# 
+7,7## 5,5## 7,7###### 5,5## 14,14LOLDONGS##                                     
+ 14,14LOLDONGS####### 1,1# 14,14### 5,5### 14,14## 5,5# 7,7# 5,5#### 7,7LOLDONGS
+LOLDONGSLOLDONGSLOLDONGS# 5,5## 14,14LOLDONGS##                                 
+ 14,14LOLDONGS###### 1,1# 14,14##### 5,5##### 7,7# 5,5#### 7,7LOLDONGSLOLDONGSLO
+LDONGSLOLDONGS 5,5#### 14,14LOLDONGS#                                           
+ 14,14LOLDONGS##### 1,1## 14,14##### 5,5##### 7,7# 5,5#### 7,7LOLDONGS###### 5,5
+#### 7,7# 5,5# 7,7# 5,5# 7,7LOLDONGS# 5,5## 14,14# 5,5# 14,14LOLDONGS##         
+ 14,14LOLDONGS#### 1,1### 15,15# 14,14#### 5,5##### 14,14### 5,5## 7,7LOLDONGSLO
+LDONGS## 5,5### 7,7LOLDONGS## 5,5# 14,14LOLDONGS#####                           
+ 14,14LOLDONGS### 1,1### 14,14# 0,0# 14,14##### 5,5#### 14,14### 5,5### 7,7LOLDO
+NGSLOLDONGSLOLDONGS##### 5,5### 14,14LOLDONGS####                               
+ 14,14LOLDONGS## 1,1#### 14,14# 0,0# 14,14###### 5,5### 14,14#### 5,5## 7,7LOLDO
+NGSLOLDONGSLOLDONGS#### 5,5### 14,14LOLDONGS#####                               
+ 14,14LOLDONGS# 1,1##### 14,14# 0,0# 15,15# 14,14#### 5,5##### 14,14### 5,5## 7,
+7LOLDONGSLOLDONGSLOLDONGS#### 5,5### 14,14LOLDONGS#####                         
+ 14,14LOLDONGS 1,1###### 15,15## 0,0# 14,14#### 5,5###### 14,14## 5,5## 7,7LOLDO
+NGSLOLDONGSLOLDONGS### 5,5### 14,14LOLDONGS######                               
+ 14,14####### 1,1####### 14,14# 15,15# 0,0# 15,15# 14,14#### 5,5####### 14,14# 5
+,5#### 7,7LOLDONGSLOLDONGS####### 5,5### 14,14LOLDONGS#######                   
+ 14,14###### 1,1LOLDONGS 14,14# 15,15## 0,0# 15,15# 14,14#### 5,5###### 14,14###
+# 5,5# 14,14# 5,5# 7,7LOLDONGSLOLDONGS##### 5,5## 14,14LOLDONGSLOLDONGS         
+ 14,14#### 1,1LOLDONGS## 14,14# 15,15## 0,0## 15,15# 14,14### 5,5LOLDONGS 14,14#
+ 5,5#### 7,7LOLDONGSLOLDONGS### 15,15# 5,5## 1,1## 14,14LOLDONGS#######         
+ 14,14### 1,1LOLDONGS#### 15,15## 0,0### 15,15# 14,14#### 5,5####### 14,14##### 
+7,7LOLDONGSLOLDONGS# 15,15# 5,5## 1,1###### 14,14LOLDONGS####                   
+ 14,14# 1,1LOLDONGS###### 15,15### 0,0### 15,15# 14,14### 5,5LOLDONGS# 14,14####
+# 7,7LOLDONGS###### 5,5# 14,14## 1,1LOLDONGS### 14,14LOLDONGS                   
+ 1,1LOLDONGS####### 15,15## 0,0###### 14,14### 5,5LOLDONGS## 14,14LOLDONGS# 5,5#
+ 7,7##### 5,5### 15,15# 14,14# 1,1LOLDONGS###### 14,14#####                     
+ 1,1LOLDONGS####### 14,14# 15,15# 0,0####### 15,15# 14,14#### 5,5LOLDONGS 14,14#
+ 5,5# 14,14LOLDONGS# 5,5##### 14,14# 0,0# 14,14# 1,1LOLDONGSLOLDONGS# 14,14##   
+ 1,1LOLDONGSLOLDONGS 15,15# 0,0LOLDONGS 15,15# 14,14##### 5,5####### 1,1##### 5,
+5LOLDONGS# 14,14# 15,15# 0,0# 15,15# 1,1LOLDONGSLOLDONGS###                     
+ 1,1LOLDONGSLOLDONGS 14,14# 0,0LOLDONGS## 15,15# 14,14#### 5,5LOLDONGS# 1,1### 5
+,5### 14,14# 5,5### 14,14# 15,15# 0,0## 15,15# 1,1LOLDONGSLOLDONGS###           
+ 1,1LOLDONGSLOLDONGS 14,14# 15,15# 0,0LOLDONGS## 15,15# 14,14### 5,5LOLDONGS 14,
+14## 5,5#### 14,14# 5,5### 14,14# 15,15# 0,0### 15,15# 1,1LOLDONGSLOLDONGS###   
+ 1,1LOLDONGSLOLDONGS# 15,15# 0,0LOLDONGS#### 14,14##### 5,5#### 14,14#### 5,5###
+#### 15,15# 0,0#### 15,15# 1,1LOLDONGSLOLDONGS###                               
+ 1,1LOLDONGSLOLDONGS# 14,14# 0,0LOLDONGS##### 15,15# 14,14#### 7,7## 5,5## 14,14
+## 7,7# 5,5##### 14,14# 15,15# 0,0##### 14,14# 1,1LOLDONGSLOLDONGS###           
+ 1,1LOLDONGSLOLDONGS## 15,15# 0,0LOLDONGS###### 15,15# 14,14##### 5,5# 7,7# 5,5#
+ 7,7# 5,5# 7,7# 5,5## 14,14# 15,15# 0,0###### 14,14# 1,1LOLDONGSLOLDONGS###     
+ 1,1LOLDONGSLOLDONGS## 14,14# 0,0LOLDONGSLOLDONGS 14,14###### 5,5# 7,7## 5,5## 1
+4,14# 15,15# 0,0####### 14,14# 1,1LOLDONGSLOLDONGS###                           
+ 1,1LOLDONGSLOLDONGS### 15,15# 0,0LOLDONGSLOLDONGS 15,15## 14,14####### 15,15# 0
+,0LOLDONGS# 14,14# 1,1LOLDONGSLOLDONGS###                                       
+ 1,1LOLDONGSLOLDONGS### 14,14# 0,0LOLDONGSLOLDONGS### 14,14##### 0,0LOLDONGS### 
+15,15# 1,1LOLDONGSLOLDONGS###                                                   
+ 1,1LOLDONGSLOLDONGS#### 15,15# 0,0LOLDONGSLOLDONGS##### 15,15# 14,14### 15,15# 
+0,0LOLDONGS 15,15# 14,14# 1,1LOLDONGSLOLDONGS##                                 
+ 1,1LOLDONGSLOLDONGS#### 15,15# 0,0LOLDONGSLOLDONGS# 15,15# 14,14## 1,1##### 14,
+14# 15,15# 0,0LOLDONGS 14,14# 1,1LOLDONGSLOLDONGS##                             
+ 1,1LOLDONGSLOLDONGS#### 14,14# 0,0LOLDONGSLOLDONGS 15,15# 1,1####### 2,2# 1,1##
+ 14,14# 0,0####### 14,14# 1,1LOLDONGSLOLDONGS##                                 
+ 1,1LOLDONGSLOLDONGS##### 15,15# 0,0LOLDONGS####### 14,14# 1,1#### 2,2# 1,1## 2,
+2# 1,1### 14,14# 0,0###### 14,14# 1,1LOLDONGSLOLDONGS##                         
+ 1,1LOLDONGSLOLDONGS##### 14,14# 0,0LOLDONGS###### 14,14# 1,1LOLDONGS 2,2# 1,1##
+# 14,14# 15,15# 0,0##### 15,15# 1,1LOLDONGSLOLDONGS##                           
+ 1,1LOLDONGSLOLDONGS###### 0,0LOLDONGS##### 15,15# 14,14## 1,1####### 2,2# 1,1##
+ 14,14# 15,15## 0,0##### 15,15# 1,1LOLDONGSLOLDONGS##                           
+ 1,1LOLDONGSLOLDONGS###### 15,15# 0,0LOLDONGS### 15,15# 14,14# 15,15## 1,1######
+# 2,2# 1,1# 14,14## 0,0# 15,15## 0,0##### 1,1LOLDONGSLOLDONGS##                 
+ 1,1LOLDONGSLOLDONGS###### 14,14# 0,0LOLDONGS### 14,14# 15,15# 0,0## 14,14# 1,1#
+###### 14,14# 15,15## 0,0## 15,15# 0,0##### 14,14# 1,1LOLDONGSLOLDONGS#         
+

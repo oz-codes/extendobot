@@ -13,17 +13,30 @@ class Markovian
   @@commands["chainsaw"] = ":chainsaw <url> - grabs the text at <url> and chainsaws it to death!!!"
   match /markov$/, method: :markov
   match /markov (\d+)$/, method: :markov
-  match /markov (\d+) ([\w ]+)$/, method: :markov
+  match /markov (\d+) (.+)/, method: :markov
   match /chainsaw (.+)/, method: :chainsaw
+  #timer 10, method: :wharrgarbl, shots: 1
   listen_to :channel
-
+=begin
+  def wharrgarbl()
+    derp=start(nil,nil,12)
+    Channel("#tcpdirect").send(derp)
+    offset = (1+rand(14).to_i)*60
+    puts "OFFSET: #{offset}"
+    offset=30
+    Timer(offset) { 
+      puts "i wharr then i garbl"
+      wharrgarbl()
+    }
+  end
+=end
   def listen(m)
     return if m.message.match /^:/
     text = m.message
     user = m.user.nick
-    if(!(["sayok","g1mp","van","durnkb0t", "[0]"].include? user)) 
+    #if(!(["sayok","g1mp","van","durnkb0t", "[0]", "maple"].include? user)) 
       process(text,user)
-    end
+    #end
   end
 
   def process(text,user=nil)
@@ -31,44 +44,39 @@ class Markovian
     mkv = Markovin8or.new(2)
     db = Util::Util.instance.getCollection("markov","ngrams") 
 
-    re = /[^a-z0-9' ]/i
+    #re = /[^a-z0-9' ]/i
+    schemes = %w{http https ftp gemini gopher irc ssh}
+    urxp = URI.regexp(schemes)
     [
-      [URI.regexp, ''], 
-      [re, ''],
+      [urxp, ''], 
+      [/[,\.\?!]/, ''],
+      #[re, ''],
+      #[/\b\d+\b/, ''],
       [/\s+/, ' '],
-      [/\b[^\sai5h]\b/i, ''],
+      #[/\b[^\sai5h]\b/i, ''],
     ].each { |args| text = text.gsub *args }
-    puts "text: #{text}"	
+    puts "process text: #{text}"	
     chains = mkv.chain(text)	
     mkvs = mkv.mongoize	
+    puts "mkvs: #{mkvs.inspect}"
     mkvs.each { |hash|	
       #next if hash["head"] == nil
       #hash["user"] = user
       #hash["server"] = Util::Util.instance.hton("#{m.bot.config.server}:#{m.bot.config.port}")
-      #p hash
-      if(db.find({head: hash["head"]}).count > 0)
-        #puts "#{hash["head"]} found"
-        hash["tails"].each { |tail|
-          if(tail != nil)
-            db.update_one(
-              {head: hash["head"]}, 
-              {'$push' => 
-               { tails: tail
-               }
-              }
-            )
-          end
+      p hash
+      db.update_one({
+        :head => hash[:head]
+      },
+      {
+        '$push': {
+          :tails => {
+            '$each': hash[:tails]
+          }
         }
-      else 
-        #puts "#{hash["head"]} not found (#{hash["tails"].inspect})"
-        val = db.insert_one(hash)
-      end
-      #p val
-      if(val)
-        #puts "success :: #{hash}"
-      else
-        #puts "failure :: #{hash}"
-      end
+      },
+      {
+        upsert: true
+      })
     }
   end
 
@@ -80,31 +88,30 @@ class Markovian
   end
   def chainsaw(m, url) 
     #uri = URI.parse url rescue nil
+    uri = nil
     begin
-      uri=URI(url)
+      uri=URI.parse(url)
     rescue URI::InvalidURIError
-      e = Util::Util.instance.getExcuse()
-      m.reply("#{m.user.nick}: #{e} [that clearly wasn't a url brah]")
-      return 0
-    end
-    if(uri.nil?)
       e = Util::Util.instance.getExcuse()
       m.reply("#{m.user.nick}: #{e} (that URL you provided was SUS AF bruh)")
       return 0
     end
-    content = ""
-    open(url) do |f|
-      content = f.read
-      content.gsub!(%r{</?[^>]+?>}, '')
+    if(uri.nil? || !(uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)))
+      e = Util::Util.instance.getExcuse()
+      m.reply("#{m.user.nick}: #{e} [that clearly wasn't a url brah]")
+      return 0
     end
+    content = ""
     e = Util::Util.instance.getSuccess()
     m.reply("#{m.user.nick}:  chainsaw engaged on #{url} ...")
-    begin 
-      process(content)
-    ensure
-      m.reply("#{m.user.nick}: #{e} (CHAINSAW SUCCESSFUL!)")
+    uri.open do |f|
+      f.each_line { |l|
+        line = l..encode('UTF-8','UTF-8', :invalid => :replace).gsub(%r{</?[^>]+?>}, '')
+        puts "processing #{line}"
+        process(line)
+      }
     end
-
+    m.reply("#{m.user.nick}: #{e} (CHAINSAW SUCCESSFUL!)")
   end
   def getRandomRow(seed = nil)
     db = Util::Util.instance.getCollection("markov","ngrams") 
@@ -117,15 +124,14 @@ class Markovian
         ret = getRow(seed)
       end
     end
-    puts "ret is: " + ret.inspect
     return ret
   end
 
-  def start(m, seed=nil, words=nil)
+  def start(m=nil, seed=nil, words=nil)
     db = Util::Util.instance.getCollection("markov","ngrams") 
     res = ""
     if(words == nil)
-      words = (4+rand(24).to_i)
+      words = (4+rand(30).to_i)
     end
     words = words > 256 ? 256 : words
     #puts "begin markov chainsaw"
@@ -150,6 +156,14 @@ class Markovian
     tail=""
     sentences = []
     sentence=[]
+    row = getRandomRow(seed)
+    if(row.kind_of?(Array)) 
+      row = row.shift
+    end
+    if(row.nil? or !row.key?("head") or row["head"].nil? or row["head"] == "" or tails.nil? or tail.nil?)
+      e = Util::Util.instance.getExcuse()
+      return "#{e} (nurga wtf i just couldn't find anything for #{seed}, me brane too smole)"
+    end
     while i < words
       #puts i
       addP = false
@@ -162,18 +176,19 @@ class Markovian
         head = row["head"]
         tails = row["tails"]
         tail = tails[rand(tails.count())]
-        test = row.nil? or !row.key?("head") or row["head"].nil? or row["head"] == "" or tails.nil? or tail.nil?
-        #puts "new row: #{row.inspect}"				
-        #puts "test: #{test.inspect}"
+        #test = row.nil? or !row.key?("head") or row["head"].nil? or row["head"] == "" or tails.nil? or tail.nil?
+        test = tail.nil?
+        puts "head: #{head}"
+        puts "tails: #{tails.inspect}"
+        puts "chosen tail: #{tail}"
+        puts "test: #{test.inspect}"
         if test
           puts "ADDD THAT PPPP"
           addP = true
-        else 
-          break
         end
+        break
         #	puts "heaheahea"
       end
-      #next if n == nil
       #puts "\t#{head} -> #{n}"
       sentence.push(head)
       out += "#{head} "

@@ -28,7 +28,10 @@ module Hooks
       res = rs.to_a[0]
       p res
       Thread.current[:result] = res
-      res = {} if res.nil?
+      res = { 
+        :level => 0
+      } if res.nil?
+
       if res[:level] and res[:level].to_i >= @@levelRequired.to_i
         Thread.current[:aclpass] = true
         return true

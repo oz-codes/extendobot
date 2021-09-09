@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 require 'cinch'
+require 'emoji'
+require 'emoji/string_ext'
 require_relative './classes/Util'
 
 utils = Util::Util.new;

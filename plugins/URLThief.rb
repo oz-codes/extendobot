@@ -6,17 +6,18 @@ class URLThief
   include Cinch::Plugin
   include Hooks::ACLHook
   include Util::PluginHelper
+  include Util::PasteMaker
   listen_to :channel
   set :prefix, /^:/
-  @clist = %w{url.rand url.find}
+  @clist = %w{url.rand url.find url.list}
   @@commands["url.rand"] = ":url.rand - spit out a random url from the url db"
   match /url\.rand/, method: :url_rand
-  @clist.push('url.find')
   @@commands["url.find"] = ":url.find </regex/> - search through url list to find any matching urls?!!?"
-  match /url\.find \/(.+?)\//, method: :url_find
+  @@commands["url.list"] = ":url.list </regex/> - search through url list to find any matching urls?!!?"
+  match /url\.(find|list) \/(.+?)\//, method: :url_find
 
 
-  def url_find(m, regex) 
+  def url_find(m, n, regex) 
     db = Util::Util.instance.getCollection("extendobot","urls")
     res = db.find({
       "url" => /#{regex}/i
@@ -24,9 +25,21 @@ class URLThief
     resp = "#{m.user.nick}: "
     if(res.empty?)
       resp << Util::Util.instance.getExcuse() << " (couldn't find anything matching /#{regex}/)"
+      puts "bong water"
     else 
-      resp << "here is what i found for /#{regex}/:\n" << res.map {|e| e['url'] }.join(" | ")
+      resp << "#{res.length} results found for /#{regex}/: " 
+      links = res.map {|e| e['url'] }.join("\n")
+      if(res.length > 10) 
+        puts "RES WAY TOO LONG"
+        p = paste(links, "Links matching /#{regex}/")
+        resp << p
+        puts "PASTE = #{p}"
+      else 
+        puts "res not too long: #{links}"
+        resp << "\n" << links
+      end
     end
+    puts "URLTHIEF resp: #{resp}"
     m.reply(resp)
   end
 

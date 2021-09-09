@@ -26,7 +26,8 @@ class Markovin8or
 		end
 		#puts "markovin #{text}"		
 		chains = []
-        contents = text.downcase
+    contents = text # fuck it just store it as we get it. phat database bb
+    #contents = text.downcase
 		words = contents.strip.split(/ /)
 		for idx in 0..words.count #loop through words
 			tail = []

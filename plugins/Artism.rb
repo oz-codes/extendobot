@@ -91,33 +91,23 @@ class Artism
       code = chunks.map { |chunk|
         chunk.join(" ")
       }.join("\n")
-=begin
-            # LOL NONE OF THIS MATTERS BECAUSE PASTEBIN IS HOMO
-            pb = Util::Util.pb
 
-            puts "gonna paste this list; info first"
-            puts "title: #{title}"
-            puts "list length: #{list.length}"
-            puts "factors: #{factors.inspect}"
-            puts "ultimate count: #{count}"
-            puts "chunks: #{chunks.inspect}"
-            puts" && code to paste: #{code}"
-            begin  
-                link = paste(code, title)
-            rescue Exception => ex
-                response << "SOMETHING MESSED UP: #{ex}"
-                return
-            end
-            response << "#{list.length} results were found; please visit "
-=end
-      content = "#{title}\n#{code}" #SPRUNGE JUST NEEDS THE CONTENT LOL
-      #SINCE PASTEBIN IS ON SOME FSCKBOY SHIT
-      # we gotta use sprunge ig so we gonna do this manually
-      uri = URI('http://sprunge.us') #build uri whatever
-      res = Net::HTTP.post_form(uri,'sprunge' => content) #make a fsckin request homo
-      if res.is_a?(Net::HTTPSuccess) #we fuckin made it bruh
-        response << res.body.strip  << " to see the full list" #build output, use link, ACAB
-      else 
+      puts "gonna paste this list; info first"
+      puts "title: #{title}"
+      puts "list length: #{list.length}"
+      puts "factors: #{factors.inspect}"
+      puts "ultimate count: #{count}"
+      puts "chunks: #{chunks.inspect}"
+      puts" && code to paste: #{code}"
+      begin  
+        link = paste(code, title)
+        if link.nil?
+          throw new Exception("SHIT DIDN'T WORK SOZ")
+        else 
+          response << "#{list.length} results were found; please visit "
+          response << link  << " to see the full list" #build output, use link, ACAB
+        end
+      rescue Exception => ex
         response <<  Util::Util.instance.getExcuse()
         response << " (SOMETHING FUCKED UP, DEAL WITH IT SORRY)" # told u ACAB, js
       end

@@ -18,10 +18,10 @@ class HHH
     { :match => /^(5 *|(5 )+)$/, :response => (("5 "*5)+"\n")*5 },
       :good_bot => 
     { :match => /good bot/i, :method => Util::Util.instance.method(:getSuccess)},
-      :bad_bot => 
-    { :match => /bad bot/i, :method => Util::Util.instance.method(:getExcuse )},
-
-
+      :queed => 
+    { :match => /queed squad/i, :response => "QUEED SQUAD RE%" }, 
+      :rep => 
+    { :match => /re%/i, :response => "RE% 5 EVR"  }
   }
   $can_speak = $responses.map { |k,v|
     k.to_sym

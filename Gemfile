@@ -17,4 +17,5 @@ gem 'ascii-image'
 gem 'rmagick' 
 gem 'mongo' #lol this one is actually really fucking important js
 gem 'extralite' #sqlitle never wants to instawall
+gem 'emoji' #emoji bro
 

@@ -34,9 +34,21 @@ class Markovian
     return if m.message.match /^:/
     text = m.message
     user = m.user.nick
-    #if(!(["sayok","g1mp","van","durnkb0t", "[0]", "maple"].include? user)) 
+    if(!([
+        "professorOak", 
+        "sayok",
+        "g1mp",
+        "van",
+        "nav",
+        "chan",
+        "durnkb0t", 
+        "[0]",
+        "maple"].
+        include? user) or  # ignore the bots lol
+        /^(d+ ?)+$/.match(text) #ignore messages that are literally just numbers and nothing else
+      )
       process(text,user)
-    #end
+    end
   end
 
   def process(text,user=nil)
@@ -44,15 +56,18 @@ class Markovian
     mkv = Markovin8or.new(2)
     db = Util::Util.instance.getCollection("markov","ngrams") 
 
-    #re = /[^a-z0-9' ]/i
+    #re = /[^a-z0-9' ]/i 
+    re = /[^[:print:]]/ #ignore nonprintable characters
     schemes = %w{http https ftp gemini gopher irc ssh}
     urxp = URI.regexp(schemes)
     [
       [urxp, ''], 
-      [/[,\.\?!]/, ''],
-      #[re, ''],
-      #[/\b\d+\b/, ''],
-      [/\s+/, ' '],
+      [re, ''],
+      [ /([[:punct]]){3,}/, "\\1"], #replace long runs of punctuation with single 
+      [/\d+,\d+./, ''], #strip ##,##C type crap
+      #[/[,\.\?!]/, ''],
+      [/\b\d{8,}\b/, ''], # strip sequences of just tons of numbers
+      [/\s+/, ' '], #reduce multiple spaces to just one
       #[/\b[^\sai5h]\b/i, ''],
     ].each { |args| text = text.gsub *args }
     puts "process text: #{text}"	
@@ -106,7 +121,7 @@ class Markovian
     m.reply("#{m.user.nick}:  chainsaw engaged on #{url} ...")
     uri.open do |f|
       f.each_line { |l|
-        line = l..encode('UTF-8','UTF-8', :invalid => :replace).gsub(%r{</?[^>]+?>}, '')
+        line = l.encode('UTF-8','UTF-8', :invalid => :replace).gsub(%r{</?[^>]+?>}, '')
         puts "processing #{line}"
         process(line)
       }
@@ -182,7 +197,7 @@ class Markovian
         puts "tails: #{tails.inspect}"
         puts "chosen tail: #{tail}"
         puts "test: #{test.inspect}"
-        if test
+        if test and sentence.length > 5
           puts "ADDD THAT PPPP"
           addP = true
         end
@@ -196,10 +211,10 @@ class Markovian
       #puts "\trow: "
       #p row
       #puts "out: #{out}"
-      if addP 
-        sentences.push(sentence)
-        sentence = []
-      end
+      #if addP # add a period. deal with it. 
+      #  sentences.push(sentence)
+      #  sentence = []
+      #end
       i+=1
     end
     if sentence.count

@@ -197,6 +197,8 @@ module Util #utilities and such
   class Bot
     attr_accessor :bot
     def initialize(host) 
+      require 'emoji'
+      require 'emoji/string_ext'
       @bot = Cinch::Bot.new do
         configure do |c|
           hostname, port = host.split(/:/)
@@ -292,15 +294,30 @@ module Util #utilities and such
     #}
 
     def paste(post, title=nil, language=nil)
-      pb = Util.pb
+      #pb = Util.pb
       title ||= ""
-      language ||= "text"
+      #language ||= "text"
+
+      content = "#{title}\n#{post}" #SPRUNGE JUST NEEDS THE CONTENT LOL
+      #SINCE PASTEBIN IS ON SOME FSCKBOY SHIT
+      # we gotta use sprunge ig so we gonna do this manually
+      uri = URI('http://sprunge.us') #build uri whatever
+      link = ""
+      res = Net::HTTP.post_form(uri,'sprunge' => content) #make a fsckin request homo
+      if res.is_a?(Net::HTTPSuccess) #we fuckin made it bruh
+        link = res.body.strip
+      else 
+        link = nil
+      end
+=begin
+      # lol fuck pastebin
       link = pb.paste_content(
         post,
         title: title,
         format: language
       )
       puts "got pb link: #{link}"
+=end
       return link
     end
   end
@@ -384,3 +401,4 @@ module Util #utilities and such
     end
   end
 end
+
